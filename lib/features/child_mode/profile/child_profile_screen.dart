@@ -581,29 +581,36 @@ class ChildLevelsScreen extends StatelessWidget {
                     itemCount: levels.length,
                     itemBuilder: (context, index) {
                       final level = levels[index];
+                      final isLeft = index.isEven;
                       final isCompleted = level < currentLevel;
                       final isCurrent = level == currentLevel;
                       final isLocked = level > currentLevel;
 
-                      return _LevelNode(
-                        level: level,
-                        isCompleted: isCompleted,
-                        isCurrent: isCurrent,
-                        isLocked: isLocked,
-                        isFirst: index == 0,
-                        isLast: index == levels.length - 1,
-                        lineColor: isCompleted || isCurrent ? const Color(0xFF6EC46B) : const Color(0xFFBBD7EA),
-                        onTap: () {
-                          if (isLocked) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          left: isLeft ? 24 : 90,
+                          right: isLeft ? 90 : 24,
+                        ),
+                        child: _LevelNode(
+                          level: level,
+                          isCompleted: isCompleted,
+                          isCurrent: isCurrent,
+                          isLocked: isLocked,
+                          isFirst: index == 0,
+                          isLast: index == levels.length - 1,
+                          lineColor: isCompleted || isCurrent ? const Color(0xFF6EC46B) : const Color(0xFFBBD7EA),
+                          onTap: () {
+                            if (isLocked) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(l10n.finishPreviousLevel)),
+                              );
+                              return;
+                            }
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(l10n.finishPreviousLevel)),
+                              SnackBar(content: Text(l10n.levelNumber(level))),
                             );
-                            return;
-                          }
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(l10n.levelNumber(level))),
-                          );
-                        },
+                          },
+                        ),
                       );
                     },
                   ),
@@ -652,24 +659,39 @@ class _LevelNode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final colors = Theme.of(context).colorScheme;
-    final nodeColor = isCurrent
-        ? const Color(0xFF4FC3F7)
+    final nodeGradient = isCurrent
+        ? const LinearGradient(
+            colors: [Color(0xFF7DD3FC), Color(0xFF38BDF8)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          )
         : isCompleted
-            ? const Color(0xFFFFC857)
-            : const Color(0xFFE0E0E0);
+            ? const LinearGradient(
+                colors: [Color(0xFFFFD166), Color(0xFFFF9F1C)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              )
+            : const LinearGradient(
+                colors: [Color(0xFFE2E8F0), Color(0xFFCBD5E1)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              );
 
     final textColor = isCurrent ? Colors.white : const Color(0xFF35536B);
+    final nodeSize = isCurrent ? 92.0 : 78.0;
 
     return Column(
       children: [
         if (!isFirst)
-          Container(
-            width: 8,
-            height: 20,
-            decoration: BoxDecoration(
-              color: lineColor,
-              borderRadius: BorderRadius.circular(4),
+          SizedBox(
+            height: 22,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _ConnectorDot(color: lineColor),
+                _ConnectorDot(color: lineColor),
+                _ConnectorDot(color: lineColor),
+              ],
             ),
           ),
         GestureDetector(
@@ -677,40 +699,38 @@ class _LevelNode extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              ClipPath(
-                clipper: _HexagonClipper(),
-                child: Container(
-                  width: isCurrent ? 90 : 80,
-                  height: isCurrent ? 90 : 80,
-                  decoration: BoxDecoration(
-                    color: nodeColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.2),
-                        blurRadius: 6,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.7),
-                      width: isCurrent ? 3 : 2,
+              Container(
+                width: nodeSize,
+                height: nodeSize,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: nodeGradient,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.18),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
                     ),
+                  ],
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.85),
+                    width: isCurrent ? 4 : 3,
                   ),
-                  child: Center(
-                    child: Text(
-                      '$level',
-                      style: TextStyle(
-                        fontSize: isCurrent ? 24 : 20,
-                        fontWeight: FontWeight.bold,
-                        color: textColor,
-                      ),
+                ),
+                child: Center(
+                  child: Text(
+                    '$level',
+                    style: TextStyle(
+                      fontSize: isCurrent ? 24 : 20,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
                     ),
                   ),
                 ),
               ),
               if (isCurrent)
                 Positioned(
-                  top: -6,
+                  top: -8,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                     decoration: BoxDecoration(
@@ -722,6 +742,12 @@ class _LevelNode extends StatelessWidget {
                       style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF1E88E5)),
                     ),
                   ),
+                ),
+              if (isCurrent)
+                const Positioned(
+                  right: 6,
+                  top: 8,
+                  child: Icon(Icons.auto_awesome, size: 14, color: Colors.white),
                 ),
               if (isCompleted)
                 Positioned(
@@ -757,12 +783,15 @@ class _LevelNode extends StatelessWidget {
           ),
         ),
         if (!isLast)
-          Container(
-            width: 8,
-            height: 20,
-            decoration: BoxDecoration(
-              color: lineColor,
-              borderRadius: BorderRadius.circular(4),
+          SizedBox(
+            height: 22,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _ConnectorDot(color: lineColor),
+                _ConnectorDot(color: lineColor),
+                _ConnectorDot(color: lineColor),
+              ],
             ),
           ),
         const SizedBox(height: 8),
@@ -771,23 +800,22 @@ class _LevelNode extends StatelessWidget {
   }
 }
 
-class _HexagonClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final width = size.width;
-    final height = size.height;
-    return Path()
-      ..moveTo(width * 0.25, 0)
-      ..lineTo(width * 0.75, 0)
-      ..lineTo(width, height * 0.5)
-      ..lineTo(width * 0.75, height)
-      ..lineTo(width * 0.25, height)
-      ..lineTo(0, height * 0.5)
-      ..close();
-  }
+class _ConnectorDot extends StatelessWidget {
+  const _ConnectorDot({required this.color});
+
+  final Color color;
 
   @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
+  Widget build(BuildContext context) {
+    return Container(
+      width: 6,
+      height: 6,
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
 }
 
 class _WoodBackgroundPainter extends CustomPainter {
@@ -816,6 +844,38 @@ class _WoodBackgroundPainter extends CustomPainter {
     canvas.drawCircle(Offset(size.width * 0.65, size.height * 0.22), 18, cloudPaint);
     canvas.drawCircle(Offset(size.width * 0.70, size.height * 0.20), 24, cloudPaint);
     canvas.drawCircle(Offset(size.width * 0.76, size.height * 0.23), 16, cloudPaint);
+
+    // Soft pastel floating dots
+    final dotPaint = Paint()..color = const Color(0xFFB2F7EF).withValues(alpha: 0.6);
+    canvas.drawCircle(Offset(size.width * 0.12, size.height * 0.38), 6, dotPaint);
+    canvas.drawCircle(Offset(size.width * 0.28, size.height * 0.32), 4, dotPaint);
+    canvas.drawCircle(Offset(size.width * 0.88, size.height * 0.34), 5, dotPaint);
+    canvas.drawCircle(Offset(size.width * 0.78, size.height * 0.40), 3, dotPaint);
+
+    final dotPaint2 = Paint()..color = const Color(0xFFFBCFE8).withValues(alpha: 0.6);
+    canvas.drawCircle(Offset(size.width * 0.22, size.height * 0.46), 5, dotPaint2);
+    canvas.drawCircle(Offset(size.width * 0.60, size.height * 0.36), 4, dotPaint2);
+
+    final dotPaint3 = Paint()..color = const Color(0xFFFFF3B0).withValues(alpha: 0.6);
+    canvas.drawCircle(Offset(size.width * 0.40, size.height * 0.28), 4, dotPaint3);
+    canvas.drawCircle(Offset(size.width * 0.72, size.height * 0.30), 5, dotPaint3);
+
+    // Pastel balloons
+    final balloonPink = Paint()..color = const Color(0xFFF9A8D4).withValues(alpha: 0.8);
+    final balloonBlue = Paint()..color = const Color(0xFF93C5FD).withValues(alpha: 0.8);
+    final balloonMint = Paint()..color = const Color(0xFF99F6E4).withValues(alpha: 0.8);
+    final stringPaint = Paint()
+      ..color = const Color(0xFF9AA5B1).withValues(alpha: 0.5)
+      ..strokeWidth = 1.2;
+
+    canvas.drawCircle(Offset(size.width * 0.08, size.height * 0.52), 18, balloonPink);
+    canvas.drawLine(Offset(size.width * 0.08, size.height * 0.54), Offset(size.width * 0.06, size.height * 0.62), stringPaint);
+
+    canvas.drawCircle(Offset(size.width * 0.90, size.height * 0.50), 16, balloonBlue);
+    canvas.drawLine(Offset(size.width * 0.90, size.height * 0.52), Offset(size.width * 0.92, size.height * 0.60), stringPaint);
+
+    canvas.drawCircle(Offset(size.width * 0.78, size.height * 0.56), 14, balloonMint);
+    canvas.drawLine(Offset(size.width * 0.78, size.height * 0.58), Offset(size.width * 0.80, size.height * 0.66), stringPaint);
 
     final hillPaintBack = Paint()..color = const Color(0xFFBDECB6);
     final hillPaintFront = Paint()..color = const Color(0xFF8ED081);
