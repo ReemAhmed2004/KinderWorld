@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kinder_world/core/theme/app_colors.dart';
 import 'package:kinder_world/core/constants/app_constants.dart';
 import 'package:lottie/lottie.dart';
+import 'package:kinder_world/core/localization/app_localizations.dart';
 
 class NoInternetScreen extends ConsumerStatefulWidget {
   const NoInternetScreen({super.key});
@@ -46,6 +47,7 @@ class _NoInternetScreenState extends ConsumerState<NoInternetScreen>
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
@@ -76,7 +78,7 @@ class _NoInternetScreenState extends ConsumerState<NoInternetScreen>
                 
                 // Title
                 Text(
-                  'No Internet Connection',
+                  l10n.noInternet,
                   style: textTheme.titleLarge?.copyWith(
                     fontSize: AppConstants.largeFontSize * 1.2,
                     fontWeight: FontWeight.bold,
@@ -87,7 +89,7 @@ class _NoInternetScreenState extends ConsumerState<NoInternetScreen>
                 
                 // Description
                 Text(
-                  'Don\'t worry! You can still use offline features. Some content may be limited until you\'re back online.',
+                  l10n.noInternetDescription,
                   style: textTheme.bodyMedium?.copyWith(
                     fontSize: AppConstants.fontSize,
                     color: colors.onSurfaceVariant,
@@ -109,7 +111,7 @@ class _NoInternetScreenState extends ConsumerState<NoInternetScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Available Offline:',
+                        l10n.availableOffline,
                         style: textTheme.titleSmall?.copyWith(
                           fontSize: AppConstants.fontSize,
                           fontWeight: FontWeight.bold,
@@ -117,13 +119,13 @@ class _NoInternetScreenState extends ConsumerState<NoInternetScreen>
                       ),
                       const SizedBox(height: 16),
                       
-                      _buildOfflineFeature(Icons.school, 'Downloaded lessons'),
+                      _buildOfflineFeature(Icons.school, l10n.offlineDownloadedLessons),
                       const SizedBox(height: 12),
-                      _buildOfflineFeature(Icons.games, 'Saved games'),
+                      _buildOfflineFeature(Icons.games, l10n.offlineSavedGames),
                       const SizedBox(height: 12),
-                      _buildOfflineFeature(Icons.book, 'Offline stories'),
+                      _buildOfflineFeature(Icons.book, l10n.offlineStories),
                       const SizedBox(height: 12),
-                      _buildOfflineFeature(Icons.person, 'Progress tracking'),
+                      _buildOfflineFeature(Icons.person, l10n.offlineProgressTracking),
                     ],
                   ),
                 ),
@@ -135,8 +137,8 @@ class _NoInternetScreenState extends ConsumerState<NoInternetScreen>
                     final messenger = ScaffoldMessenger.of(context);
                     // Simulate checking connection
                     messenger.showSnackBar(
-                      const SnackBar(
-                        content: Text('Checking connection...'),
+                      SnackBar(
+                        content: Text(l10n.checkingConnection),
                         backgroundColor: AppColors.info,
                       ),
                     );
@@ -146,15 +148,15 @@ class _NoInternetScreenState extends ConsumerState<NoInternetScreen>
                         return;
                       }
                       messenger.showSnackBar(
-                        const SnackBar(
-                          content: Text('Still no connection. Please check your internet.'),
+                        SnackBar(
+                          content: Text(l10n.stillNoConnection),
                           backgroundColor: AppColors.warning,
                         ),
                       );
                     });
                   },
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Try Again'),
+                  label: Text(l10n.tryAgain),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: colors.onPrimary,
@@ -178,7 +180,7 @@ class _NoInternetScreenState extends ConsumerState<NoInternetScreen>
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  child: const Text('Continue Offline'),
+                  child: Text(l10n.continueOffline),
                 ),
                 const SizedBox(height: 40),
               ],

@@ -176,6 +176,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
   }
 
   void _showChildSelection(List<ChildProfile> children) {
+    final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -203,8 +204,8 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                 title: Text(child.name),
                 subtitle: Text(
                   child.age > 0
-                      ? 'Age ${child.age} - Level ${child.level}'
-                      : 'Age — - Level ${child.level}',
+                      ? '${l10n.childAge} ${child.age} - ${l10n.level} ${child.level}'
+                      : '${l10n.childAge} - - ${l10n.level} ${child.level}',
                 ),
                 trailing: _selectedChild?.id == child.id
                     ? Icon(
@@ -370,6 +371,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
 
                       // Progress Overview
                       _buildProgressOverview(
+                        l10n,
                         _periodLabel(l10n),
                         metrics['activities'] ?? '-',
                         metrics['score'] ?? '-',
@@ -558,8 +560,8 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
           const SizedBox(height: 16),
           _buildAchievementItem(
             '*',
-            'Math Master',
-            'Completed 10 math activities',
+            l10n.achievementMathMasterTitle,
+            l10n.achievementMathMasterReportSubtitle,
             '2 ${l10n.daysAgo}',
             textTheme,
             colors,
@@ -567,8 +569,8 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
           const SizedBox(height: 12),
           _buildAchievementItem(
             '!',
-            'Perfect Score',
-            'Got 100% in Science Quiz',
+            l10n.achievementPerfectScoreTitle,
+            l10n.achievementPerfectScoreSubtitle,
             '3 ${l10n.daysAgo}',
             textTheme,
             colors,
@@ -576,8 +578,8 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
           const SizedBox(height: 12),
           _buildAchievementItem(
             '+',
-            '5-Day Streak',
-            'Used app for 5 consecutive days',
+            l10n.achievementStreakTitle,
+            l10n.achievementFiveDayStreakSubtitle,
             l10n.justNow,
             textTheme,
             colors,
@@ -600,6 +602,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
   }
 
   Widget _buildProgressOverview(
+    AppLocalizations l10n,
     String title,
     String activities,
     String score,
@@ -629,19 +632,19 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
           _buildProgressMetric(
-            'Activities',
+            l10n.activities,
             activities,
             colors.primary,
             Icons.check_circle,
           ),
               _buildProgressMetric(
-                'Avg Score',
+                l10n.avgScoreLabel,
                 score,
             colors.secondary,
                 Icons.star,
               ),
               _buildProgressMetric(
-                'Time',
+                l10n.timeLabel,
                 time,
             colors.tertiary,
                 Icons.timer,

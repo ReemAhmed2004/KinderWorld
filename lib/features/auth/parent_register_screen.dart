@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kinder_world/core/theme/app_colors.dart';
 import 'package:kinder_world/core/constants/app_constants.dart';
 import 'package:kinder_world/core/providers/auth_controller.dart';
+import 'package:kinder_world/core/localization/app_localizations.dart';
 
 class ParentRegisterScreen extends ConsumerStatefulWidget {
   const ParentRegisterScreen({super.key});
@@ -37,11 +38,12 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
 
   Future<void> _register() async {
     if (!_formKey.currentState!.validate()) return;
-    
+
+    final l10n = AppLocalizations.of(context)!;
     if (!_agreeToTerms) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please agree to the terms and conditions'),
+        SnackBar(
+          content: Text(l10n.agreeToTermsError),
           backgroundColor: AppColors.error,
         ),
       );
@@ -68,8 +70,8 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
       
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Registration successful! Welcome to Kinder World!'),
+          SnackBar(
+            content: Text(l10n.registrationSuccess),
             backgroundColor: AppColors.success,
           ),
         );
@@ -78,7 +80,7 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
         final error = ref.read(authControllerProvider).error;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(error ?? 'Registration failed. Please try again.'),
+            content: Text(error ?? l10n.registerError),
             backgroundColor: AppColors.error,
           ),
         );
@@ -90,6 +92,7 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -111,7 +114,7 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
                 // Header
                 const SizedBox(height: 20),
                 Text(
-                  'Create Account',
+                  l10n.createAccount,
                   style: textTheme.titleLarge?.copyWith(
                     fontSize: AppConstants.largeFontSize * 1.2,
                     fontWeight: FontWeight.bold,
@@ -119,7 +122,7 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Join Kinder World and start your child\'s learning journey',
+                  l10n.registerSubtitle,
                   style: textTheme.bodyMedium?.copyWith(
                     fontSize: AppConstants.fontSize,
                     color: colors.onSurfaceVariant,
@@ -130,14 +133,14 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
                 // Name field
                 TextFormField(
                   controller: _nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Full Name',
-                    hintText: 'Enter your full name',
+                  decoration: InputDecoration(
+                    labelText: l10n.fullNameLabel,
+                    hintText: l10n.fullNameHint,
                     prefixIcon: Icon(Icons.person),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
+                      return l10n.nameRequired;
                     }
                     return null;
                   },
@@ -151,17 +154,17 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
                   textCapitalization: TextCapitalization.none,
                   autocorrect: false,
                   enableSuggestions: false,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    hintText: 'Enter your email',
+                  decoration: InputDecoration(
+                    labelText: l10n.email,
+                    hintText: l10n.emailHint,
                     prefixIcon: Icon(Icons.email),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return l10n.emailRequired;
                     }
                     if (!value.contains('@')) {
-                      return 'Please enter a valid email';
+                      return l10n.invalidEmail;
                     }
                     return null;
                   },
@@ -172,9 +175,9 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
                 TextFormField(
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
-                    labelText: 'Phone Number (Optional)',
-                    hintText: 'Enter your phone number',
+                  decoration: InputDecoration(
+                    labelText: l10n.phoneNumberOptional,
+                    hintText: l10n.phoneNumberHint,
                     prefixIcon: Icon(Icons.phone),
                   ),
                 ),
@@ -185,8 +188,8 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
                   controller: _passwordController,
                   obscureText: _obscurePassword,
                   decoration: InputDecoration(
-                    labelText: 'Password',
-                    hintText: 'Create a password',
+                    labelText: l10n.password,
+                    hintText: l10n.passwordCreateHint,
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -202,22 +205,22 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please create a password';
+                      return l10n.passwordCreateRequired;
                     }
                     if (value.length < 6) {
-                      return 'Password must be at least 6 characters';
+                      return l10n.passwordTooShort;
                     }
                     // Check for uppercase letter
                     if (!value.contains(RegExp(r'[A-Z]'))) {
-                      return 'Password must include uppercase letter';
+                      return l10n.passwordUppercaseRequired;
                     }
                     // Check for number
                     if (!value.contains(RegExp(r'[0-9]'))) {
-                      return 'Password must include number';
+                      return l10n.passwordNumberRequired;
                     }
                     // Check for special character
                     if (!value.contains(RegExp(r'[!@#$%^&*()_+\-=\[\]{};:'"'"'",.<>?]'))) {
-                      return 'Password must include special character (!@#\$%^&*)';
+                      return l10n.passwordSpecialRequired;
                     }
                     return null;
                   },
@@ -229,8 +232,8 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
                   controller: _confirmPasswordController,
                   obscureText: _obscureConfirmPassword,
                   decoration: InputDecoration(
-                    labelText: 'Confirm Password',
-                    hintText: 'Confirm your password',
+                    labelText: l10n.confirmPassword,
+                    hintText: l10n.confirmPasswordHint,
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -246,10 +249,10 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please confirm your password';
+                      return l10n.confirmPasswordRequired;
                     }
                     if (value != _passwordController.text) {
-                      return 'Passwords do not match';
+                      return l10n.passwordsDoNotMatch;
                     }
                     return null;
                   },
@@ -275,17 +278,17 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
                             color: colors.onSurfaceVariant,
                           ),
                           children: [
-                            const TextSpan(text: 'I agree to the '),
+                            TextSpan(text: l10n.agreeToTermsPrefix),
                             TextSpan(
-                              text: 'Terms of Service',
+                              text: l10n.termsOfService,
                               style: TextStyle(
                                 color: colors.primary,
                                 decoration: TextDecoration.underline,
                               ),
                             ),
-                            const TextSpan(text: ' and '),
+                            TextSpan(text: l10n.andLabel),
                             TextSpan(
-                              text: 'Privacy Policy',
+                              text: l10n.privacyPolicy,
                               style: TextStyle(
                                 color: colors.primary,
                                 decoration: TextDecoration.underline,
@@ -314,8 +317,8 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
                     ),
                     child: _isLoading
                         ? CircularProgressIndicator(color: colors.onPrimary)
-                        : const Text(
-                            'Create Account',
+                        : Text(
+                            l10n.createAccount,
                             style: TextStyle(
                               fontSize: AppConstants.fontSize,
                               fontWeight: FontWeight.w600,
@@ -330,7 +333,7 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Already have an account? ',
+                      l10n.alreadyHaveAccount,
                       style: textTheme.bodySmall?.copyWith(
                         color: colors.onSurfaceVariant,
                         fontSize: 14,
@@ -340,7 +343,7 @@ class _ParentRegisterScreenState extends ConsumerState<ParentRegisterScreen> {
                       onPressed: () {
                         context.go('/parent/login');
                       },
-                      child: const Text('Login'),
+                      child: Text(l10n.login),
                     ),
                   ],
                 ),

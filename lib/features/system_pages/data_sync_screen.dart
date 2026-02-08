@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kinder_world/core/theme/app_colors.dart';
 import 'package:kinder_world/core/constants/app_constants.dart';
+import 'package:kinder_world/core/localization/app_localizations.dart';
 
 class DataSyncScreen extends ConsumerStatefulWidget {
   const DataSyncScreen({super.key});
@@ -15,7 +16,7 @@ class _DataSyncScreenState extends ConsumerState<DataSyncScreen>
     with SingleTickerProviderStateMixin {
   bool _isSyncing = false;
   double _syncProgress = 0.0;
-  String _syncStatus = 'Ready to sync';
+  String _syncStatus = '';
   
   late AnimationController _controller;
   late Animation<double> _rotationAnimation;
@@ -36,6 +37,14 @@ class _DataSyncScreenState extends ConsumerState<DataSyncScreen>
       parent: _controller,
       curve: Curves.linear,
     ));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {
+          _syncStatus = AppLocalizations.of(context)!.syncReady;
+        });
+      }
+    });
   }
 
   @override
@@ -45,10 +54,11 @@ class _DataSyncScreenState extends ConsumerState<DataSyncScreen>
   }
 
   Future<void> _startSync() async {
+    final l10n = AppLocalizations.of(context)!;
     setState(() {
       _isSyncing = true;
       _syncProgress = 0.0;
-      _syncStatus = 'Starting sync...';
+      _syncStatus = l10n.syncStarting;
     });
     
     _controller.repeat();
@@ -62,13 +72,13 @@ class _DataSyncScreenState extends ConsumerState<DataSyncScreen>
           _syncProgress = i / 100;
           
           if (i < 30) {
-            _syncStatus = 'Syncing child profiles...';
+            _syncStatus = l10n.syncingChildProfiles;
           } else if (i < 60) {
-            _syncStatus = 'Syncing progress data...';
+            _syncStatus = l10n.syncingProgressData;
           } else if (i < 90) {
-            _syncStatus = 'Syncing activities...';
+            _syncStatus = l10n.syncingActivities;
           } else {
-            _syncStatus = 'Finalizing sync...';
+            _syncStatus = l10n.syncFinalizing;
           }
         });
       }
@@ -79,7 +89,7 @@ class _DataSyncScreenState extends ConsumerState<DataSyncScreen>
     if (mounted) {
       setState(() {
         _isSyncing = false;
-        _syncStatus = 'Sync completed successfully!';
+        _syncStatus = l10n.syncCompleted;
       });
       
       _controller.stop();
@@ -90,6 +100,7 @@ class _DataSyncScreenState extends ConsumerState<DataSyncScreen>
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -100,7 +111,7 @@ class _DataSyncScreenState extends ConsumerState<DataSyncScreen>
           onPressed: () => context.go('/parent/settings'),
         ),
         title: Text(
-          'Data Sync',
+          l10n.dataSyncTitle,
           style: textTheme.titleMedium?.copyWith(
             fontSize: AppConstants.fontSize,
             fontWeight: FontWeight.bold,
@@ -190,33 +201,33 @@ class _DataSyncScreenState extends ConsumerState<DataSyncScreen>
                     ),
                   ],
                 ),
-                child: const Column(
+                child: Column(
                   children: [
                     _SyncDetailItem(
                       icon: Icons.person,
-                      label: 'Child Profiles',
-                      value: '2 synced',
+                      label: l10n.syncChildProfilesLabel,
+                      value: l10n.syncedCount(2),
                       isSynced: true,
                     ),
                     SizedBox(height: 16),
                     _SyncDetailItem(
                       icon: Icons.analytics,
-                      label: 'Progress Data',
-                      value: '15 activities',
+                      label: l10n.syncProgressDataLabel,
+                      value: l10n.activitiesCount(15),
                       isSynced: true,
                     ),
                     SizedBox(height: 16),
                     _SyncDetailItem(
                       icon: Icons.settings,
-                      label: 'Settings',
-                      value: 'Synced',
+                      label: l10n.syncSettingsLabel,
+                      value: l10n.syncedLabel,
                       isSynced: true,
                     ),
                     SizedBox(height: 16),
                     _SyncDetailItem(
                       icon: Icons.cloud,
-                      label: 'Last Sync',
-                      value: '2 hours ago',
+                      label: l10n.syncLastSyncLabel,
+                      value: '2 ${l10n.hoursAgo}',
                       isSynced: null,
                     ),
                   ],
@@ -240,7 +251,7 @@ class _DataSyncScreenState extends ConsumerState<DataSyncScreen>
                   child: _isSyncing
                     ? CircularProgressIndicator(color: colors.onPrimary)
                     : Text(
-                        'Sync Now',
+                        l10n.syncNow,
                         style: textTheme.titleSmall?.copyWith(
                           fontSize: AppConstants.fontSize,
                           fontWeight: FontWeight.bold,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kinder_world/core/theme/app_colors.dart';
 import 'package:kinder_world/core/constants/app_constants.dart';
+import 'package:kinder_world/core/localization/app_localizations.dart';
 
 class CategoryScreen extends ConsumerWidget {
   final String category;
@@ -14,7 +15,8 @@ class CategoryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activities = _getMockActivities(category);
+    final l10n = AppLocalizations.of(context)!;
+    final activities = _getMockActivities(category, l10n);
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     
@@ -28,7 +30,7 @@ class CategoryScreen extends ConsumerWidget {
           onPressed: () => context.go('/child/play'),
         ),
         title: Text(
-          _getCategoryDisplayName(category),
+          _getCategoryDisplayName(category, l10n),
           style: textTheme.titleMedium?.copyWith(
             fontSize: AppConstants.fontSize,
             fontWeight: FontWeight.bold,
@@ -69,7 +71,7 @@ class CategoryScreen extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            _getCategoryDisplayName(category),
+                            _getCategoryDisplayName(category, l10n),
                             style: textTheme.titleLarge?.copyWith(
                               fontSize: AppConstants.largeFontSize,
                               fontWeight: FontWeight.bold,
@@ -77,7 +79,7 @@ class CategoryScreen extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            '${activities.length} activities available',
+                            l10n.activityCount(activities.length),
                             style: TextStyle(
                               fontSize: 16,
                               color: colors.onPrimary.withValues(alpha: 0.8),
@@ -93,7 +95,7 @@ class CategoryScreen extends ConsumerWidget {
               
               // Activities list
               Text(
-                'Choose an Activity',
+                l10n.chooseActivity,
                 style: textTheme.titleMedium?.copyWith(
                   fontSize: AppConstants.fontSize,
                   fontWeight: FontWeight.bold,
@@ -118,7 +120,7 @@ class CategoryScreen extends ConsumerWidget {
                         // In a real app, this would start the activity
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Starting ${activity['title']}'),
+                            content: Text(l10n.startingActivity(activity['title'])),
                           ),
                         );
                       },
@@ -133,37 +135,37 @@ class CategoryScreen extends ConsumerWidget {
     );
   }
 
-  List<Map<String, dynamic>> _getMockActivities(String category) {
+  List<Map<String, dynamic>> _getMockActivities(String category, AppLocalizations l10n) {
     final allActivities = {
       'games': [
         {
           'id': 'game_01',
-          'title': 'Math Puzzles',
-          'description': 'Fun math challenges',
+          'title': l10n.activityGame1Title,
+          'description': l10n.activityGame1Desc,
           'icon': '🧮',
           'duration': 10,
           'xp': 25,
         },
         {
           'id': 'game_02',
-          'title': 'Memory Match',
-          'description': 'Test your memory',
+          'title': l10n.activityGame2Title,
+          'description': l10n.activityGame2Desc,
           'icon': '🧠',
           'duration': 8,
           'xp': 20,
         },
         {
           'id': 'game_03',
-          'title': 'Word Builder',
-          'description': 'Create words from letters',
+          'title': l10n.activityGame3Title,
+          'description': l10n.activityGame3Desc,
           'icon': '🔤',
           'duration': 12,
           'xp': 30,
         },
         {
           'id': 'game_04',
-          'title': 'Color Match',
-          'description': 'Match colors and shapes',
+          'title': l10n.activityGame4Title,
+          'description': l10n.activityGame4Desc,
           'icon': '🎨',
           'duration': 6,
           'xp': 15,
@@ -172,32 +174,32 @@ class CategoryScreen extends ConsumerWidget {
       'stories': [
         {
           'id': 'story_01',
-          'title': 'The Brave Little Ant',
-          'description': 'A story about courage',
+          'title': l10n.activityStory1Title,
+          'description': l10n.activityStory1Desc,
           'icon': '🐜',
           'duration': 15,
           'xp': 40,
         },
         {
           'id': 'story_02',
-          'title': 'Rainbow Adventure',
-          'description': 'Colors come to life',
+          'title': l10n.activityStory2Title,
+          'description': l10n.activityStory2Desc,
           'icon': '🌈',
           'duration': 12,
           'xp': 35,
         },
         {
           'id': 'story_03',
-          'title': 'The Magic Tree',
-          'description': 'A tale of friendship',
+          'title': l10n.activityStory3Title,
+          'description': l10n.activityStory3Desc,
           'icon': '🌳',
           'duration': 18,
           'xp': 45,
         },
         {
           'id': 'story_04',
-          'title': 'Ocean Dreams',
-          'description': 'Underwater adventure',
+          'title': l10n.activityStory4Title,
+          'description': l10n.activityStory4Desc,
           'icon': '🌊',
           'duration': 20,
           'xp': 50,
@@ -206,32 +208,32 @@ class CategoryScreen extends ConsumerWidget {
       'music': [
         {
           'id': 'music_01',
-          'title': 'Sing Along',
-          'description': 'Fun children songs',
+          'title': l10n.activityMusic1Title,
+          'description': l10n.activityMusic1Desc,
           'icon': '🎤',
           'duration': 8,
           'xp': 20,
         },
         {
           'id': 'music_02',
-          'title': 'Instrument Sounds',
-          'description': 'Learn musical instruments',
+          'title': l10n.activityMusic2Title,
+          'description': l10n.activityMusic2Desc,
           'icon': '🎺',
           'duration': 10,
           'xp': 25,
         },
         {
           'id': 'music_03',
-          'title': 'Rhythm Time',
-          'description': 'Clap to the beat',
+          'title': l10n.activityMusic3Title,
+          'description': l10n.activityMusic3Desc,
           'icon': '🥁',
           'duration': 6,
           'xp': 15,
         },
         {
           'id': 'music_04',
-          'title': 'Dance Party',
-          'description': 'Move and groove',
+          'title': l10n.activityMusic4Title,
+          'description': l10n.activityMusic4Desc,
           'icon': '💃',
           'duration': 12,
           'xp': 30,
@@ -240,32 +242,32 @@ class CategoryScreen extends ConsumerWidget {
       'videos': [
         {
           'id': 'video_01',
-          'title': 'Nature Explorer',
-          'description': 'Discover the natural world',
+          'title': l10n.activityVideo1Title,
+          'description': l10n.activityVideo1Desc,
           'icon': '🦋',
           'duration': 25,
           'xp': 40,
         },
         {
           'id': 'video_02',
-          'title': 'Science Wonders',
-          'description': 'Amazing science facts',
+          'title': l10n.activityVideo2Title,
+          'description': l10n.activityVideo2Desc,
           'icon': '🔬',
           'duration': 20,
           'xp': 35,
         },
         {
           'id': 'video_03',
-          'title': 'Animal Friends',
-          'description': 'Meet different animals',
+          'title': l10n.activityVideo3Title,
+          'description': l10n.activityVideo3Desc,
           'icon': '🐘',
           'duration': 18,
           'xp': 30,
         },
         {
           'id': 'video_04',
-          'title': 'Space Adventure',
-          'description': 'Journey to the stars',
+          'title': l10n.activityVideo4Title,
+          'description': l10n.activityVideo4Desc,
           'icon': '🚀',
           'duration': 22,
           'xp': 45,
@@ -276,16 +278,16 @@ class CategoryScreen extends ConsumerWidget {
     return allActivities[category] ?? [];
   }
 
-  String _getCategoryDisplayName(String category) {
+  String _getCategoryDisplayName(String category, AppLocalizations l10n) {
     switch (category) {
       case 'games':
-        return 'Fun Games';
+        return l10n.categoryGames;
       case 'stories':
-        return 'Stories';
+        return l10n.categoryStories;
       case 'music':
-        return 'Music & Songs';
+        return l10n.categoryMusic;
       case 'videos':
-        return 'Educational Videos';
+        return l10n.categoryVideos;
       default:
         return category;
     }
@@ -335,6 +337,7 @@ class _ActivityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
@@ -387,7 +390,7 @@ class _ActivityCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  '${activity['duration']} min',
+                  l10n.activityMinutes(activity['duration']),
                   style: textTheme.bodySmall?.copyWith(
                     fontSize: 12,
                     color: colors.onSurfaceVariant,
@@ -401,7 +404,7 @@ class _ActivityCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  '${activity['xp']} XP',
+                  l10n.activityXp(activity['xp']),
                   style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.xpColor,

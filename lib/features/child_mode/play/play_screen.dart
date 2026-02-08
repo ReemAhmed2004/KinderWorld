@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kinder_world/core/theme/app_colors.dart';
 import 'package:kinder_world/core/constants/app_constants.dart';
 import 'package:kinder_world/core/widgets/themed_card.dart';
+import 'package:kinder_world/core/localization/app_localizations.dart';
 
 class PlayScreen extends ConsumerWidget {
   const PlayScreen({super.key});
@@ -12,6 +13,7 @@ class PlayScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
@@ -23,7 +25,7 @@ class PlayScreen extends ConsumerWidget {
               // Header
               const SizedBox(height: 20),
               Text(
-                'Play & Fun',
+                l10n.playTitle,
                 style: textTheme.titleLarge?.copyWith(
                   fontSize: AppConstants.largeFontSize * 1.5,
                   fontWeight: FontWeight.bold,
@@ -31,7 +33,7 @@ class PlayScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Enjoy games, stories, and entertainment!',
+                l10n.playSubtitle,
                 style: textTheme.bodyMedium?.copyWith(
                   fontSize: AppConstants.fontSize,
                   color: colors.onSurfaceVariant,
@@ -48,34 +50,34 @@ class PlayScreen extends ConsumerWidget {
                   children: [
                     _buildGameCard(
                       context,
-                      'Educational Games',
+                      l10n.playEducationalGames,
                       Icons.games,
                       AppColors.entertaining,
-                      'Fun learning games',
+                      l10n.playEducationalGamesSubtitle,
                       'games',
                     ),
                     _buildGameCard(
                       context,
-                      'Interactive Stories',
+                      l10n.playInteractiveStories,
                       Icons.book,
                       AppColors.behavioral,
-                      'Choose your adventure',
+                      l10n.playInteractiveStoriesSubtitle,
                       'stories',
                     ),
                     _buildGameCard(
                       context,
-                      'Music & Songs',
+                      l10n.playMusicSongs,
                       Icons.music_note,
                       AppColors.skillful,
-                      'Sing and dance',
+                      l10n.playMusicSongsSubtitle,
                       'music',
                     ),
                     _buildGameCard(
                       context,
-                      'Educational Videos',
+                      l10n.playEducationalVideos,
                       Icons.play_circle,
                       AppColors.educational,
-                      'Watch and learn',
+                      l10n.playEducationalVideosSubtitle,
                       'videos',
                     ),
                   ],

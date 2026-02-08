@@ -42,12 +42,12 @@ class _ParentChangePasswordScreenState
   @override
   Widget build(BuildContext context) {
     final passwordState = ref.watch(changePasswordControllerProvider);
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.parentChangePassword ?? 'Change Password'),
+        title: Text(l10n.parentChangePassword),
         elevation: 0,
       ),
       body: Padding(
@@ -59,8 +59,8 @@ class _ParentChangePasswordScreenState
               controller: _currentPasswordController,
               obscureText: !_showCurrentPassword,
               decoration: InputDecoration(
-                labelText: 'Current Password',
-                hintText: 'Enter your current password',
+                labelText: l10n.currentPasswordLabel,
+                hintText: l10n.currentPasswordHint,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -86,8 +86,8 @@ class _ParentChangePasswordScreenState
               controller: _newPasswordController,
               obscureText: !_showNewPassword,
               decoration: InputDecoration(
-                labelText: 'New Password',
-                hintText: 'Enter your new password (min 6 characters)',
+                labelText: l10n.newPasswordLabel,
+                hintText: l10n.newPasswordHint,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -113,8 +113,8 @@ class _ParentChangePasswordScreenState
               controller: _confirmPasswordController,
               obscureText: !_showConfirmPassword,
               decoration: InputDecoration(
-                labelText: 'Confirm Password',
-                hintText: 'Re-enter your new password',
+                labelText: l10n.confirmPasswordLabel,
+                hintText: l10n.confirmPasswordHintAlt,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -197,7 +197,7 @@ class _ParentChangePasswordScreenState
                       valueColor: AlwaysStoppedAnimation<Color>(colors.onPrimary),
                     ),
                   ),
-                  orElse: () => const Text('Update Password'),
+                  orElse: () => Text(l10n.updatePassword),
                 ),
               ),
             ),

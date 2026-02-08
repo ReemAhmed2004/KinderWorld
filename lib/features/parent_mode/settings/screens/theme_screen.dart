@@ -7,15 +7,33 @@ import 'package:kinder_world/core/theme/theme_palette.dart';
 class ParentThemeScreen extends ConsumerWidget {
   const ParentThemeScreen({super.key});
 
+
+  String _paletteLabel(AppLocalizations l10n, String id) {
+    switch (id) {
+      case 'default':
+        return l10n.paletteDefault;
+      case 'blue':
+        return l10n.paletteOceanBlue;
+      case 'purple':
+        return l10n.palettePurpleNight;
+      case 'green':
+        return l10n.paletteForestGreen;
+      case 'sunset':
+        return l10n.paletteSunsetOrange;
+      default:
+        return l10n.paletteDefault;
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final themeSettings = ref.watch(themeControllerProvider);
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.theme ?? 'Theme'),
+        title: Text(l10n.theme),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -24,7 +42,7 @@ class ParentThemeScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.themePalette ?? 'Theme Palette',
+              l10n.themePalette,
               style: textTheme.titleMedium,
             ),
             const SizedBox(height: 12),
@@ -34,6 +52,7 @@ class ParentThemeScreen extends ConsumerWidget {
                   padding: const EdgeInsets.only(bottom: 12),
                   child: _PaletteCard(
                     palette: palette,
+                    displayName: _paletteLabel(l10n, palette.id),
                     isSelected: themeSettings.paletteId == palette.id,
                     onTap: () => ref
                         .read(themeControllerProvider.notifier)
@@ -51,11 +70,13 @@ class ParentThemeScreen extends ConsumerWidget {
 
 class _PaletteCard extends StatelessWidget {
   final ThemePalette palette;
+  final String displayName;
   final bool isSelected;
   final VoidCallback onTap;
 
   const _PaletteCard({
     required this.palette,
+    required this.displayName,
     required this.isSelected,
     required this.onTap,
   });
@@ -102,7 +123,7 @@ class _PaletteCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    palette.name,
+                    displayName,
                     style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),

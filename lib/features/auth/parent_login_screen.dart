@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kinder_world/core/theme/app_colors.dart';
 import 'package:kinder_world/core/constants/app_constants.dart';
 import 'package:kinder_world/core/providers/auth_controller.dart';
+import 'package:kinder_world/core/localization/app_localizations.dart';
 
 class ParentLoginScreen extends ConsumerStatefulWidget {
   const ParentLoginScreen({super.key});
@@ -30,6 +31,7 @@ class _ParentLoginScreenState extends ConsumerState<ParentLoginScreen> {
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
 
+    final l10n = AppLocalizations.of(context)!;
     final authController = ref.read(authControllerProvider.notifier);
 
     setState(() {
@@ -52,7 +54,7 @@ class _ParentLoginScreenState extends ConsumerState<ParentLoginScreen> {
         final error = ref.read(authControllerProvider).error;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(error ?? 'Login failed. Please try again.'),
+            content: Text(error ?? l10n.loginError),
             backgroundColor: AppColors.error,
           ),
         );
@@ -66,6 +68,7 @@ class _ParentLoginScreenState extends ConsumerState<ParentLoginScreen> {
     final isLoading = _isLoading || authState.isLoading;
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
     final outlineBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: colors.outlineVariant),
@@ -120,7 +123,7 @@ class _ParentLoginScreenState extends ConsumerState<ParentLoginScreen> {
                 // Header
                 const SizedBox(height: 20),
                 Text(
-                  'Parent Login',
+                  l10n.parentLogin,
                   style: textTheme.titleLarge?.copyWith(
                     fontSize: AppConstants.largeFontSize * 1.2,
                     fontWeight: FontWeight.bold,
@@ -128,7 +131,7 @@ class _ParentLoginScreenState extends ConsumerState<ParentLoginScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Welcome back! Please sign in to continue.',
+                  l10n.parentLoginSubtitle,
                   style: textTheme.bodyMedium?.copyWith(
                     fontSize: AppConstants.fontSize,
                     color: colors.onSurfaceVariant,
@@ -145,16 +148,16 @@ class _ParentLoginScreenState extends ConsumerState<ParentLoginScreen> {
                   enableSuggestions: false,
                   style: textTheme.bodyMedium?.copyWith(color: colors.onSurface),
                   decoration: buildDecoration(
-                    label: 'Email',
-                    hint: 'Enter your email',
+                    label: l10n.email,
+                    hint: l10n.emailHint,
                     icon: Icons.email,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return l10n.emailRequired;
                     }
                     if (!value.contains('@')) {
-                      return 'Please enter a valid email';
+                      return l10n.invalidEmail;
                     }
                     return null;
                   },
@@ -167,8 +170,8 @@ class _ParentLoginScreenState extends ConsumerState<ParentLoginScreen> {
                   obscureText: _obscurePassword,
                   style: textTheme.bodyMedium?.copyWith(color: colors.onSurface),
                   decoration: buildDecoration(
-                    label: 'Password',
-                    hint: 'Enter your password',
+                    label: l10n.password,
+                    hint: l10n.passwordHint,
                     icon: Icons.lock,
                     suffix: IconButton(
                       icon: Icon(
@@ -186,10 +189,10 @@ class _ParentLoginScreenState extends ConsumerState<ParentLoginScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
+                      return l10n.passwordRequired;
                     }
                     if (value.length < 6) {
-                      return 'Password must be at least 6 characters';
+                      return l10n.passwordTooShort;
                     }
                     return null;
                   },
@@ -203,7 +206,7 @@ class _ParentLoginScreenState extends ConsumerState<ParentLoginScreen> {
                     onPressed: () {
                       // TODO: Implement forgot password
                     },
-                    child: const Text('Forgot Password?'),
+                    child: Text(l10n.forgotPassword),
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -223,8 +226,8 @@ class _ParentLoginScreenState extends ConsumerState<ParentLoginScreen> {
                     ),
                     child: isLoading
                         ? CircularProgressIndicator(color: colors.onPrimary)
-                        : const Text(
-                            'Login',
+                        : Text(
+                            l10n.login,
                             style: TextStyle(
                               fontSize: AppConstants.fontSize,
                               fontWeight: FontWeight.w600,
@@ -242,10 +245,10 @@ class _ParentLoginScreenState extends ConsumerState<ParentLoginScreen> {
                         color: colors.outlineVariant.withValues(alpha: 0.6),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Text(
-                        'OR',
+                        l10n.orLabel,
                         style: TextStyle(
                           fontSize: 14,
                         ),
@@ -274,8 +277,8 @@ class _ParentLoginScreenState extends ConsumerState<ParentLoginScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text(
-                      'Create Account',
+                    child: Text(
+                      l10n.createAccount,
                       style: TextStyle(
                         fontSize: AppConstants.fontSize,
                         color: AppColors.primary,

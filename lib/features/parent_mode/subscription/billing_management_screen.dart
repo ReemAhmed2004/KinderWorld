@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kinder_world/core/localization/app_localizations.dart';
 import 'package:kinder_world/core/widgets/themed_card.dart';
 
 class BillingManagementScreen extends StatelessWidget {
@@ -6,12 +7,13 @@ class BillingManagementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Billing'),
+        title: Text(l10n.billingTitle),
       ),
       body: SafeArea(
         child: Padding(
@@ -30,15 +32,14 @@ class BillingManagementScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Manage Billing',
+                  l10n.manageBilling,
                   style: textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  'Billing management is coming soon. You can update payment '
-                  'methods and invoices here once the backend is ready.',
+                  l10n.billingComingSoon,
                   style: textTheme.bodyMedium?.copyWith(
                     color: colors.onSurfaceVariant,
                   ),

@@ -342,14 +342,14 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Parent Dashboard',
+                              l10n.parentDashboard,
                               style: textTheme.titleLarge?.copyWith(
                                 fontSize: AppConstants.largeFontSize,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              'Welcome back! Here\'s what\'s happening',
+                              l10n.parentDashboardSubtitle,
                               style: textTheme.bodySmall?.copyWith(
                                 fontSize: 14,
                                 color: colors.onSurfaceVariant,
@@ -446,13 +446,14 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
           },
           backgroundColor: Theme.of(context).colorScheme.primary,
           icon: const Icon(Icons.add),
-          label: const Text('Add Child'),
+          label: Text(l10n.addChild),
         ),
       ),
     );
   }
 
   Widget _buildChildrenOverview(List<ChildProfile> children) {
+    final l10n = AppLocalizations.of(context)!;
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     if (children.isEmpty) {
@@ -467,7 +468,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
             Icon(Icons.child_care, size: 64, color: colors.onSurfaceVariant),
             const SizedBox(height: 16),
             Text(
-              'No children added yet',
+              l10n.noChildrenAddedTitle,
               style: textTheme.titleMedium?.copyWith(
                 fontSize: AppConstants.fontSize,
                 fontWeight: FontWeight.bold,
@@ -475,7 +476,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
             ),
             const SizedBox(height: 8),
             Text(
-              'Add your first child to get started',
+              l10n.noChildrenAddedSubtitle,
               style: textTheme.bodySmall?.copyWith(
                 fontSize: 14,
                 color: colors.onSurfaceVariant,
@@ -486,7 +487,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
               onPressed: () {
                 context.go('/parent/child-management');
               },
-              child: const Text('Add Child'),
+              child: Text(l10n.addChild),
             ),
           ],
         ),
@@ -497,7 +498,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Your Children',
+          l10n.yourChildren,
           style: textTheme.titleMedium?.copyWith(
             fontSize: AppConstants.fontSize,
             fontWeight: FontWeight.bold,
@@ -513,7 +514,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
     final l10n = AppLocalizations.of(context)!;
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final ageLabel = child.age > 0 ? l10n.yearsOld(child.age) : '—';
+    final ageLabel = child.age > 0 ? l10n.yearsOld(child.age) : '-';
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(20),
@@ -550,7 +551,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '$ageLabel • Level ${child.level}',
+                  '$ageLabel - ${l10n.level} ${child.level}',
                   style: textTheme.bodySmall?.copyWith(
                     fontSize: 14,
                     color: colors.onSurfaceVariant,
@@ -561,9 +562,9 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
                   spacing: 8,
                   runSpacing: 8,
                   children: [
-                    _buildInfoChip('${child.activitiesCompleted} activities', AppColors.success),
-                    _buildInfoChip('${child.totalTimeSpent} min today', AppColors.info),
-                    _buildInfoChip('${child.streak} day streak', AppColors.streakColor),
+                    _buildInfoChip(l10n.activitiesCount(child.activitiesCompleted), AppColors.success),
+                    _buildInfoChip(l10n.minutesToday(child.totalTimeSpent), AppColors.info),
+                    _buildInfoChip(l10n.dayStreak(child.streak), AppColors.streakColor),
                   ],
                 ),
               ],
@@ -578,6 +579,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
     if (children.isEmpty) {
       return const SizedBox();
     }
+    final l10n = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
 
     final totalTime = children.fold<int>(0, (sum, child) => sum + child.totalTimeSpent);
@@ -591,7 +593,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Today\'s Overview',
+          l10n.todayOverviewTitle,
           style: textTheme.titleMedium?.copyWith(
             fontSize: AppConstants.fontSize,
             fontWeight: FontWeight.bold,
@@ -602,8 +604,8 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
           children: [
             Expanded(
               child: _buildStatCard(
-                'Total Time',
-                '$totalTime min',
+                l10n.totalTimeLabel,
+                l10n.activityMinutes(totalTime),
                 Icons.timer,
                 AppColors.info,
               ),
@@ -611,7 +613,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
             const SizedBox(width: 16),
             Expanded(
               child: _buildStatCard(
-                'Activities',
+                l10n.activities,
                 '$totalActivities',
                 Icons.check_circle,
                 AppColors.success,
@@ -620,7 +622,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
             const SizedBox(width: 16),
             Expanded(
               child: _buildStatCard(
-                'Avg XP',
+                l10n.avgXpLabel,
                 '$avgXp',
                 Icons.star,
                 AppColors.xpColor,
@@ -706,6 +708,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
     if (children.isEmpty) {
       return const SizedBox();
     }
+    final l10n = AppLocalizations.of(context)!;
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -732,7 +735,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
               ),
               const SizedBox(width: 12),
               Text(
-                'AI Insights',
+                l10n.aiInsights,
                 style: textTheme.titleMedium?.copyWith(
                   fontSize: AppConstants.fontSize,
                   fontWeight: FontWeight.bold,
@@ -756,7 +759,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
             onPressed: () {
               context.go('/parent/reports');
             },
-            child: const Text('View Detailed Report'),
+            child: Text(l10n.viewDetailedReport),
           ),
         ],
       ),
@@ -765,19 +768,18 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
 
   String _generateInsightMessage(List<ChildProfile> children) {
     if (children.isEmpty) return '';
-    
-    final names = children.map((c) => c.name).join(' and ');
+    final l10n = AppLocalizations.of(context)!;
+    final names = children.map((c) => c.name).join(' و ');
     final totalActivities = children.fold<int>(0, (sum, child) => sum + child.activitiesCompleted);
-    
-    return '$names ${children.length > 1 ? 'are' : 'is'} showing great progress! '
-           'Total of $totalActivities activities completed. '
-           'Keep up the excellent work!';
+
+    return l10n.insightsSummary(names, totalActivities, children.length);
   }
 
   Widget _buildRecentActivities(List<ChildProfile> children) {
     if (children.isEmpty) {
       return const SizedBox();
     }
+    final l10n = AppLocalizations.of(context)!;
 
     return FutureBuilder<List<ProgressRecord>>(
       future: _getRecentActivitiesForAllChildren(children),
@@ -792,7 +794,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Recent Activities',
+                  l10n.recentActivitiesTitle,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontSize: AppConstants.fontSize,
                         fontWeight: FontWeight.bold,
@@ -802,7 +804,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
                   onPressed: () {
                     context.go('/parent/reports');
                   },
-                  child: const Text('View All'),
+                  child: Text(l10n.viewAll),
                 ),
               ],
             ),
@@ -816,7 +818,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  'No recent activities',
+                  l10n.noRecentActivities,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontSize: 14,
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -831,7 +833,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
                     orElse: () => children.first,
                   );
                   return _buildActivityItem(
-                    '${child.name} completed activity',
+                    l10n.completedActivity(child.name),
                     _formatTimeAgo(record.createdAt),
                     AppColors.educational,
                   );
@@ -859,17 +861,18 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
   }
 
   String _formatTimeAgo(DateTime date) {
+    final l10n = AppLocalizations.of(context)!;
     final now = DateTime.now();
     final difference = now.difference(date);
     
     if (difference.inDays > 0) {
-      return '${difference.inDays} day${difference.inDays > 1 ? 's' : ''} ago';
+      return '${difference.inDays} ${l10n.daysAgo}';
     } else if (difference.inHours > 0) {
-      return '${difference.inHours} hour${difference.inHours > 1 ? 's' : ''} ago';
+      return '${difference.inHours} ${l10n.hoursAgo}';
     } else if (difference.inMinutes > 0) {
-      return '${difference.inMinutes} minute${difference.inMinutes > 1 ? 's' : ''} ago';
+      return '${difference.inMinutes} ${l10n.minutesAgo}';
     }
-    return 'Just now';
+    return l10n.justNow;
   }
 
   Widget _buildActivityItem(String text, String time, Color color) {
@@ -918,6 +921,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
     if (children.isEmpty) {
       return const SizedBox();
     }
+    final l10n = AppLocalizations.of(context)!;
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -941,7 +945,7 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Weekly Progress',
+            l10n.weeklyProgressTitle,
             style: textTheme.titleMedium?.copyWith(
               fontSize: AppConstants.fontSize,
               fontWeight: FontWeight.bold,
@@ -959,7 +963,15 @@ class _ParentDashboardScreenState extends ConsumerState<ParentDashboardScreen>
                     sideTitles: SideTitles(
                       showTitles: true,
                       getTitlesWidget: (value, meta) {
-                        const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                        final days = [
+                          l10n.weekdayMon,
+                          l10n.weekdayTue,
+                          l10n.weekdayWed,
+                          l10n.weekdayThu,
+                          l10n.weekdayFri,
+                          l10n.weekdaySat,
+                          l10n.weekdaySun,
+                        ];
                         if (value.toInt() >= 0 && value.toInt() < days.length) {
                           return Text(
                             days[value.toInt()],

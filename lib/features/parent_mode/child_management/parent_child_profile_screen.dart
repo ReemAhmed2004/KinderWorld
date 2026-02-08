@@ -64,7 +64,7 @@ class ParentChildProfileScreen extends StatelessWidget {
               Text(
                 child.age > 0
                     ? '${l10n.yearsOld(child.age)} - ${l10n.level} ${child.level}'
-                    : '— - ${l10n.level} ${child.level}',
+                    : '- - ${l10n.level} ${child.level}',
                 style: textTheme.bodySmall?.copyWith(
                   fontSize: 14,
                   color: colors.onSurfaceVariant,

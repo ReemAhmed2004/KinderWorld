@@ -9,6 +9,7 @@ import 'package:kinder_world/core/subscription/plan_info.dart';
 import 'package:kinder_world/core/widgets/themed_card.dart';
 import 'package:kinder_world/features/child_mode/paywall/payment_methods_screen.dart';
 import 'package:kinder_world/router.dart';
+import 'package:kinder_world/core/localization/app_localizations.dart';
 
 class SubscriptionScreen extends ConsumerStatefulWidget {
   const SubscriptionScreen({super.key});
@@ -21,14 +22,15 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
   bool _isProcessing = false;
   PlanTier? _processingTier;
 
-  String _planTitle(PlanTier tier) {
+  
+  String _planTitle(AppLocalizations l10n, PlanTier tier) {
     switch (tier) {
       case PlanTier.free:
-        return 'Free Plan';
+        return l10n.planFree;
       case PlanTier.premium:
-        return 'Premium Plan';
+        return l10n.planPremium;
       case PlanTier.familyPlus:
-        return 'Family Plan';
+        return l10n.planFamilyPlus;
     }
   }
 
@@ -46,6 +48,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
       _isProcessing = true;
       _processingTier = tier;
     });
+    final l10n = AppLocalizations.of(context)!;
     final messenger = ScaffoldMessenger.of(context);
 
     try {
@@ -60,7 +63,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
             .activateSubscription(tier);
         if (!activated) {
           messenger.showSnackBar(
-            const SnackBar(content: Text('Failed to activate subscription.')),
+            SnackBar(content: Text(l10n.subscriptionActivationFailed)),
           );
           return;
         }
@@ -69,7 +72,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
       await _applyPlan(tier);
       if (!mounted) return;
       messenger.showSnackBar(
-        SnackBar(content: Text('${_planTitle(tier)} activated.')),
+        SnackBar(content: Text(l10n.planActivated(_planTitle(l10n, tier)))),
       );
     } finally {
       if (!mounted) return;
@@ -82,6 +85,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     final textTheme = theme.textTheme;
@@ -90,7 +94,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('Subscription'),
+        title: Text(l10n.subscriptionTitle),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -127,14 +131,14 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            _planTitle(plan.tier),
+                            _planTitle(l10n, plan.tier),
                             style: textTheme.titleMedium?.copyWith(
                               fontSize: AppConstants.fontSize,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            'Subscription Active',
+                            l10n.subscriptionActiveLabel,
                             style: textTheme.bodySmall?.copyWith(
                               fontSize: 14,
                               color: colors.onSurfaceVariant,
@@ -150,7 +154,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        'Active',
+                        l10n.activeLabel,
                         style: textTheme.labelSmall?.copyWith(
                           color: colors.onPrimary,
                           fontSize: 12,
@@ -165,7 +169,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
               
               // Features
               Text(
-                'Your Plan Includes:',
+                l10n.yourPlanIncludes,
                 style: textTheme.titleMedium?.copyWith(
                   fontSize: AppConstants.fontSize,
                   fontWeight: FontWeight.bold,
@@ -176,13 +180,13 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
               _buildFeatureItem(
                 context,
                 Icons.people,
-                'Up to ${plan.maxChildren} child profiles',
+                l10n.planChildProfiles(plan.maxChildren),
               ),
-              _buildFeatureItem(context, Icons.school, 'Unlimited activities'),
-              _buildFeatureItem(context, Icons.bar_chart, 'Advanced reports'),
-              _buildFeatureItem(context, Icons.psychology, 'AI insights'),
-              _buildFeatureItem(context, Icons.download, 'Offline downloads'),
-              _buildFeatureItem(context, Icons.support, 'Priority support'),
+              _buildFeatureItem(context, Icons.school, l10n.unlimitedActivities),
+              _buildFeatureItem(context, Icons.bar_chart, l10n.advancedReportsLabel),
+              _buildFeatureItem(context, Icons.psychology, l10n.aiInsights),
+              _buildFeatureItem(context, Icons.download, l10n.offlineDownloadsLabel),
+              _buildFeatureItem(context, Icons.support, l10n.prioritySupportLabel),
               
               const SizedBox(height: 32),
               
@@ -201,7 +205,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Billing Information',
+                      l10n.billingInformation,
                       style: textTheme.titleMedium?.copyWith(
                         fontSize: AppConstants.fontSize,
                         fontWeight: FontWeight.bold,
@@ -209,9 +213,9 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
                     ),
                     const SizedBox(height: 16),
                     
-                    _buildBillingRow(context, 'Next Payment', 'Dec 31, 2024'),
-                    _buildBillingRow(context, 'Amount', '\$9.99/month'),
-                    _buildBillingRow(context, 'Payment Method', '**** **** **** 1234'),
+                    _buildBillingRow(context, l10n.nextPayment, l10n.nextPaymentSampleDate),
+                    _buildBillingRow(context, l10n.amountLabel, l10n.sampleAmountPerMonth),
+                    _buildBillingRow(context, l10n.paymentMethodLabel, l10n.samplePaymentMethod),
                     
                     const SizedBox(height: 20),
                     
@@ -222,7 +226,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 48),
                       ),
-                      child: const Text('Manage Billing'),
+                      child: Text(l10n.manageBilling),
                     ),
                   ],
                 ),
@@ -232,7 +236,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
               
               // Available Plans
               Text(
-                'Available Plans',
+                l10n.availablePlans,
                 style: textTheme.titleMedium?.copyWith(
                   fontSize: AppConstants.fontSize,
                   fontWeight: FontWeight.bold,
@@ -243,12 +247,12 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
               _buildPlanCard(
                 context,
                 plan,
-                'Free Plan',
+                l10n.planFree,
                 '\$0',
-                'Basic features only',
+                l10n.basicFeaturesOnly,
                 [
-                  'Limited activities',
-                  '1 child profile',
+                  l10n.limitedActivities,
+                  l10n.oneChildProfile,
                   'Basic reports',
                 ],
                 PlanTier.free,
@@ -258,16 +262,16 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
               _buildPlanCard(
                 context,
                 plan,
-                'Family Plan',
+                l10n.planFamilyPlus,
                 '\$9.99',
-                'Best for families',
+                l10n.bestForFamilies,
                 [
-                  'Unlimited activities',
-                  'Up to 3 children',
-                  'Advanced reports',
-                  'AI insights',
-                  'Offline downloads',
-                  'Priority support',
+                  l10n.unlimitedActivities,
+                  l10n.upToThreeChildren,
+                  l10n.advancedReportsLabel,
+                  l10n.aiInsights,
+                  l10n.offlineDownloadsLabel,
+                  l10n.prioritySupportLabel,
                 ],
                 PlanTier.familyPlus,
               ),
@@ -349,6 +353,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
     List<String> features,
     PlanTier tier,
   ) {
+    final l10n = AppLocalizations.of(context)!;
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final isRecommended = tier == PlanTier.familyPlus;
@@ -378,7 +383,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                'RECOMMENDED',
+                l10n.recommendedLabel,
                 style: textTheme.labelSmall?.copyWith(
                   color: colors.onPrimary,
                   fontSize: 12,
@@ -442,10 +447,10 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen> {
             ),
             child: Text(
               isCurrent
-                  ? 'Current Plan'
+                  ? l10n.currentPlanLabel
                   : _processingTier == tier
-                      ? 'Processing...'
-                      : 'Choose Plan',
+                      ? l10n.processingLabel
+                      : l10n.choosePlanLabel,
             ),
           ),
         ],

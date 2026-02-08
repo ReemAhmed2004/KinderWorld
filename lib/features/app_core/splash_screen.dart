@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kinder_world/core/constants/app_constants.dart';
+import 'package:kinder_world/core/localization/app_localizations.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -61,6 +62,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: colors.primary,
       body: SafeArea(
@@ -105,7 +107,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                 
                 // App Title
                 Text(
-                  'Kinder World',
+                  l10n.appTitle,
                   style: textTheme.titleLarge?.copyWith(
                     fontSize: AppConstants.largeFontSize,
                     fontWeight: FontWeight.bold,
@@ -117,7 +119,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                 
                 // Tagline
                 Text(
-                  'Learn. Play. Grow.',
+                  l10n.splashTagline,
                   style: textTheme.bodyMedium?.copyWith(
                     fontSize: AppConstants.fontSize,
                     color: colors.onPrimary.withValues(alpha: 0.8),
@@ -134,7 +136,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                 
                 // Loading text
                 Text(
-                  'Loading...',
+                  l10n.loading,
                   style: textTheme.bodyMedium?.copyWith(
                     fontSize: AppConstants.fontSize,
                     color: colors.onPrimary.withValues(alpha: 0.7),

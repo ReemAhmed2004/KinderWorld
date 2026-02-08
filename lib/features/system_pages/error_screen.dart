@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kinder_world/core/theme/app_colors.dart';
 import 'package:kinder_world/core/constants/app_constants.dart';
+import 'package:kinder_world/core/localization/app_localizations.dart';
 
 class ErrorScreen extends ConsumerStatefulWidget {
   final String error;
@@ -50,6 +51,7 @@ class _ErrorScreenState extends ConsumerState<ErrorScreen>
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
@@ -87,7 +89,7 @@ class _ErrorScreenState extends ConsumerState<ErrorScreen>
                 
                 // Title
                 Text(
-                  'Oops! Something went wrong',
+                  l10n.errorTitle,
                   style: textTheme.titleLarge?.copyWith(
                     fontSize: AppConstants.largeFontSize * 1.2,
                     fontWeight: FontWeight.bold,
@@ -107,7 +109,7 @@ class _ErrorScreenState extends ConsumerState<ErrorScreen>
                   child: Column(
                     children: [
                       Text(
-                        'Error Details:',
+                        l10n.errorDetailsLabel,
                         style: textTheme.titleSmall?.copyWith(
                           fontSize: AppConstants.fontSize,
                           fontWeight: FontWeight.bold,
@@ -138,7 +140,7 @@ class _ErrorScreenState extends ConsumerState<ErrorScreen>
                     }
                   },
                   icon: const Icon(Icons.arrow_back),
-                  label: const Text('Go Back'),
+                  label: Text(l10n.goBack),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: colors.onPrimary,
@@ -158,7 +160,7 @@ class _ErrorScreenState extends ConsumerState<ErrorScreen>
                     ));
                   },
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Try Again'),
+                  label: Text(l10n.tryAgain),
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 56),
                     shape: RoundedRectangleBorder(
@@ -172,14 +174,14 @@ class _ErrorScreenState extends ConsumerState<ErrorScreen>
                   onPressed: () {
                     // Report error (placeholder)
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Error reported. Thank you for your feedback!'),
+                      SnackBar(
+                        content: Text(l10n.errorReported),
                         backgroundColor: AppColors.success,
                       ),
                     );
                   },
                   icon: const Icon(Icons.bug_report),
-                  label: const Text('Report Issue'),
+                  label: Text(l10n.reportIssue),
                 ),
                 const SizedBox(height: 40),
               ],

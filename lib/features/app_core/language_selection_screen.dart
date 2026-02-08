@@ -70,12 +70,12 @@ class _LanguageSelectionScreenState extends ConsumerState<LanguageSelectionScree
       {
         'code': 'en',
         'name': l10n.english,
-        'flag': 'EN',
+        'flag': l10n.languageEnglishShort,
       },
       {
         'code': 'ar',
         'name': l10n.arabic,
-        'flag': 'AR',
+        'flag': l10n.languageArabicShort,
       },
     ];
 

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kinder_world/core/theme/app_colors.dart';
 import 'package:kinder_world/core/constants/app_constants.dart';
+import 'package:kinder_world/core/localization/app_localizations.dart';
 
 class HelpSupportScreen extends ConsumerWidget {
   const HelpSupportScreen({super.key});
@@ -11,6 +12,7 @@ class HelpSupportScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -21,7 +23,7 @@ class HelpSupportScreen extends ConsumerWidget {
           onPressed: () => context.go('/parent/settings'),
         ),
         title: Text(
-          'Help & Support',
+          l10n.helpSupportTitle,
           style: textTheme.titleMedium?.copyWith(
             fontSize: AppConstants.fontSize,
             fontWeight: FontWeight.bold,
@@ -63,14 +65,14 @@ class HelpSupportScreen extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Need Help?',
+                            l10n.helpNeedHelpTitle,
                             style: textTheme.titleLarge?.copyWith(
                               fontSize: AppConstants.largeFontSize,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            'We\'re here to support you',
+                            l10n.helpNeedHelpSubtitle,
                             style: textTheme.bodyMedium?.copyWith(
                               fontSize: 16,
                               color: colors.onSurfaceVariant,
@@ -86,7 +88,7 @@ class HelpSupportScreen extends ConsumerWidget {
               
               // FAQ Section
               Text(
-                'Frequently Asked Questions',
+                l10n.helpFaqTitle,
                 style: textTheme.titleMedium?.copyWith(
                   fontSize: AppConstants.fontSize,
                   fontWeight: FontWeight.bold,
@@ -94,40 +96,40 @@ class HelpSupportScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 16),
               
-              const _FAQItem(
-                question: 'How do I set up a child profile?',
-                answer: 'Go to Parent Mode → Child Management and tap "Add New Profile". Follow the step-by-step guide to create a personalized profile for your child.',
+              _FAQItem(
+                question: l10n.helpFaqQ1,
+                answer: l10n.helpFaqA1,
               ),
               const SizedBox(height: 12),
               
-              const _FAQItem(
-                question: 'Can I limit my child\'s screen time?',
-                answer: 'Yes! In Parent Mode, go to Parental Controls → Screen Time to set daily limits, break intervals, and allowed hours.',
+              _FAQItem(
+                question: l10n.helpFaqQ2,
+                answer: l10n.helpFaqA2,
               ),
               const SizedBox(height: 12),
               
-              const _FAQItem(
-                question: 'How does the AI assistant work?',
-                answer: 'The AI assistant uses your child\'s age, interests, and learning progress to provide personalized recommendations and guidance.',
+              _FAQItem(
+                question: l10n.helpFaqQ3,
+                answer: l10n.helpFaqA3,
               ),
               const SizedBox(height: 12),
               
-              const _FAQItem(
-                question: 'Is my child\'s data safe?',
-                answer: 'Absolutely! We follow strict privacy policies and comply with COPPA and GDPR regulations to protect your child\'s information.',
+              _FAQItem(
+                question: l10n.helpFaqQ4,
+                answer: l10n.helpFaqA4,
               ),
               const SizedBox(height: 12),
               
-              const _FAQItem(
-                question: 'Can my child use the app offline?',
-                answer: 'Yes, many activities are available offline. Download content in advance for uninterrupted learning.',
+              _FAQItem(
+                question: l10n.helpFaqQ5,
+                answer: l10n.helpFaqA5,
               ),
               
               const SizedBox(height: 32),
               
               // Contact Support
               Text(
-                'Contact Support',
+                l10n.helpContactSupportTitle,
                 style: textTheme.titleMedium?.copyWith(
                   fontSize: AppConstants.fontSize,
                   fontWeight: FontWeight.bold,
@@ -152,7 +154,7 @@ class HelpSupportScreen extends ConsumerWidget {
                   children: [
                     _ContactOption(
                       icon: Icons.email,
-                      title: 'Email Support',
+                      title: l10n.helpEmailSupportTitle,
                       subtitle: 'support@kinderworld.app',
                       onTap: () {
                         // Open email client
@@ -161,8 +163,8 @@ class HelpSupportScreen extends ConsumerWidget {
                     const SizedBox(height: 16),
                     _ContactOption(
                       icon: Icons.chat,
-                      title: 'Live Chat',
-                      subtitle: 'Available 24/7',
+                      title: l10n.helpLiveChatTitle,
+                      subtitle: l10n.helpLiveChatSubtitle,
                       onTap: () {
                         // Open chat
                       },
@@ -170,8 +172,8 @@ class HelpSupportScreen extends ConsumerWidget {
                     const SizedBox(height: 16),
                     _ContactOption(
                       icon: Icons.phone,
-                      title: 'Phone Support',
-                      subtitle: '1-800-KINDER',
+                      title: l10n.helpPhoneSupportTitle,
+                      subtitle: l10n.helpPhoneSupportSubtitle,
                       onTap: () {
                         // Make phone call
                       },
@@ -184,7 +186,7 @@ class HelpSupportScreen extends ConsumerWidget {
               
               // Additional Resources
               Text(
-                'Additional Resources',
+                l10n.helpResourcesTitle,
                 style: textTheme.titleMedium?.copyWith(
                   fontSize: AppConstants.fontSize,
                   fontWeight: FontWeight.bold,
@@ -209,7 +211,7 @@ class HelpSupportScreen extends ConsumerWidget {
                   children: [
                     _ResourceItem(
                       icon: Icons.description,
-                      title: 'User Guide',
+                      title: l10n.helpUserGuide,
                       onTap: () {
                         context.go('/legal?type=guide');
                       },
@@ -217,7 +219,7 @@ class HelpSupportScreen extends ConsumerWidget {
                     const SizedBox(height: 16),
                     _ResourceItem(
                       icon: Icons.privacy_tip,
-                      title: 'Privacy Policy',
+                      title: l10n.privacyPolicy,
                       onTap: () {
                         context.go('/legal?type=privacy');
                       },
@@ -225,7 +227,7 @@ class HelpSupportScreen extends ConsumerWidget {
                     const SizedBox(height: 16),
                     _ResourceItem(
                       icon: Icons.gavel,
-                      title: 'Terms of Service',
+                      title: l10n.termsOfService,
                       onTap: () {
                         context.go('/legal?type=terms');
                       },
@@ -233,7 +235,7 @@ class HelpSupportScreen extends ConsumerWidget {
                     const SizedBox(height: 16),
                     _ResourceItem(
                       icon: Icons.update,
-                      title: 'App Updates',
+                      title: l10n.helpAppUpdates,
                       onTap: () {
                         // Check for updates
                       },
@@ -247,7 +249,7 @@ class HelpSupportScreen extends ConsumerWidget {
               // App version
               Center(
                 child: Text(
-                  'Kinder World v${AppConstants.appVersion}',
+                  l10n.appVersionLabel(AppConstants.appVersion),
                   style: textTheme.bodySmall?.copyWith(
                     fontSize: 14,
                     color: colors.onSurfaceVariant,
@@ -266,7 +268,7 @@ class _FAQItem extends StatefulWidget {
   final String question;
   final String answer;
   
-  const _FAQItem({
+  _FAQItem({
     required this.question,
     required this.answer,
   });

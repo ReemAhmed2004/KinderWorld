@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kinder_world/core/theme/app_colors.dart';
 import 'package:kinder_world/core/constants/app_constants.dart';
+import 'package:kinder_world/core/localization/app_localizations.dart';
 
 class MaintenanceScreen extends ConsumerStatefulWidget {
   const MaintenanceScreen({super.key});
@@ -44,6 +45,7 @@ class _MaintenanceScreenState extends ConsumerState<MaintenanceScreen>
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
@@ -79,7 +81,7 @@ class _MaintenanceScreenState extends ConsumerState<MaintenanceScreen>
               
               // Title
               Text(
-                'Under Maintenance',
+                l10n.maintenanceTitle,
                 style: textTheme.titleLarge?.copyWith(
                   fontSize: AppConstants.largeFontSize * 1.2,
                   fontWeight: FontWeight.bold,
@@ -90,7 +92,7 @@ class _MaintenanceScreenState extends ConsumerState<MaintenanceScreen>
               
               // Description
               Text(
-                'We\'re making Kinder World even better for you and your children! Please try again in a few minutes.',
+                l10n.maintenanceDescription,
                 style: textTheme.bodyMedium?.copyWith(
                   fontSize: AppConstants.fontSize,
                   color: colors.onSurfaceVariant,
@@ -111,7 +113,7 @@ class _MaintenanceScreenState extends ConsumerState<MaintenanceScreen>
                 child: Column(
                   children: [
                     Text(
-                      'Estimated Completion',
+                      l10n.maintenanceEtaTitle,
                       style: textTheme.titleSmall?.copyWith(
                         fontSize: AppConstants.fontSize,
                         fontWeight: FontWeight.bold,
@@ -119,7 +121,7 @@ class _MaintenanceScreenState extends ConsumerState<MaintenanceScreen>
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '30 minutes',
+                      l10n.maintenanceEtaDuration,
                       style: textTheme.titleLarge?.copyWith(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -128,7 +130,7 @@ class _MaintenanceScreenState extends ConsumerState<MaintenanceScreen>
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '2:30 PM - 3:00 PM UTC',
+                      l10n.maintenanceEtaWindow,
                       style: textTheme.bodySmall?.copyWith(
                         fontSize: 14,
                         color: colors.onSurfaceVariant,
@@ -151,7 +153,7 @@ class _MaintenanceScreenState extends ConsumerState<MaintenanceScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'What\'s Coming:',
+                      l10n.maintenanceWhatsComing,
                       style: textTheme.titleSmall?.copyWith(
                         fontSize: AppConstants.fontSize,
                         fontWeight: FontWeight.bold,
@@ -159,13 +161,13 @@ class _MaintenanceScreenState extends ConsumerState<MaintenanceScreen>
                     ),
                     const SizedBox(height: 16),
                     
-                    _buildFeatureItem(Icons.star, 'New AI learning features'),
+                    _buildFeatureItem(Icons.star, l10n.maintenanceFeatureAi),
                     const SizedBox(height: 12),
-                    _buildFeatureItem(Icons.games, 'Enhanced games and activities'),
+                    _buildFeatureItem(Icons.games, l10n.maintenanceFeatureGames),
                     const SizedBox(height: 12),
-                    _buildFeatureItem(Icons.security, 'Improved safety features'),
+                    _buildFeatureItem(Icons.security, l10n.maintenanceFeatureSafety),
                     const SizedBox(height: 12),
-                    _buildFeatureItem(Icons.speed, 'Better performance and speed'),
+                    _buildFeatureItem(Icons.speed, l10n.maintenanceFeaturePerformance),
                   ],
                 ),
               ),
@@ -173,7 +175,7 @@ class _MaintenanceScreenState extends ConsumerState<MaintenanceScreen>
               
               // Social Media Links
               Text(
-                'Follow us for updates:',
+                l10n.maintenanceFollowUs,
                 style: textTheme.bodySmall?.copyWith(
                   fontSize: 14,
                   color: colors.onSurfaceVariant,
@@ -230,6 +232,7 @@ class _MaintenanceScreenState extends ConsumerState<MaintenanceScreen>
   }
 
   Widget _buildSocialIcon(IconData icon, Color color) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: 48,
       height: 48,
@@ -243,7 +246,7 @@ class _MaintenanceScreenState extends ConsumerState<MaintenanceScreen>
           // Placeholder for social media links
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Opening ${icon.toString()}...'),
+              content: Text(l10n.openingLink(icon.toString())),
               backgroundColor: color,
             ),
           );
