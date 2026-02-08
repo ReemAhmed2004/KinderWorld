@@ -711,4 +711,509 @@ class AppLocalizationsAr extends AppLocalizationsEn {
 
   @override
   String get parentAbout => 'حول التطبيق';
+
+  @override
+  String get songsAndMusic => 'الأغاني والموسيقى';
+
+  @override
+  String get cartoonsLabel => 'الرسوم المتحركة';
+
+  @override
+  String get foundSomethingFun => 'لقيت لك حاجة ممتعة!';
+
+  @override
+  String get puzzleGame => 'لعبة الألغاز';
+
+  @override
+  String get racingCars => 'سباق السيارات';
+
+  @override
+  String get memoryMatch => 'لعبة الذاكرة';
+
+  @override
+  String get coloringFun => 'تلوين ممتع';
+
+  @override
+  String get adventureTime => 'وقت المغامرة';
+
+  @override
+  String get funnyAnimals => 'حيوانات مضحكة';
+
+  @override
+  String get spaceHeroes => 'أبطال الفضاء';
+
+  @override
+  String get magicWorld => 'عالم السحر';
+
+  @override
+  String get abcSong => 'أغنية ABC';
+
+  @override
+  String get babyShark => 'بيبي شارك';
+
+  @override
+  String get twinkleStar => 'تلألأ يا نجمة';
+
+  @override
+  String itemNumber(int number) => 'عنصر $number';
+
+  @override
+  String get valueGiving => 'العطاء';
+
+  @override
+  String get valueRespect => 'الاحترام';
+
+  @override
+  String get valueTolerance => 'التسامح';
+
+  @override
+  String get valueKindness => 'اللطف';
+
+  @override
+  String get valueCooperation => 'التعاون';
+
+  @override
+  String get valueResponsibility => 'المسؤولية';
+
+  @override
+  String get valueHonesty => 'الصدق';
+
+  @override
+  String get valuePatience => 'الصبر';
+
+  @override
+  String get valueCourage => 'الشجاعة';
+
+  @override
+  String get valueGratitude => 'الامتنان';
+
+  @override
+  String get valuePeace => 'السلام';
+
+  @override
+  String get valueLove => 'المحبة';
+
+  @override
+  String get practiceKindnessPrompt => 'هيا نمارس اللطف اليوم!';
+
+  @override
+  String get methodRelaxation => 'الاسترخاء';
+
+  @override
+  String get methodImagination => 'الخيال';
+
+  @override
+  String get methodMeditation => 'التأمل';
+
+  @override
+  String get methodArtExpression => 'التعبير الفني';
+
+  @override
+  String get methodSocialBonding => 'الترابط الاجتماعي';
+
+  @override
+  String get methodSelfDevelopment => 'تطوير الذات';
+
+  @override
+  String get methodSocialJusticeFocus => 'التركيز على العدالة الاجتماعية';
+
+  @override
+  String get activityKindnessChallenge => 'تحدي اللطف';
+
+  @override
+  String get activityRespectSharing => 'الاحترام والمشاركة';
+
+  @override
+  String get tryNewSkillPrompt => 'لنجرّب مهارة جديدة اليوم!';
+
+  @override
+  String get skillCooking => 'الطبخ';
+
+  @override
+  String get skillDrawing => 'الرسم';
+
+  @override
+  String get skillColoring => 'التلوين';
+
+  @override
+  String get skillMusic => 'الموسيقى';
+
+  @override
+  String get skillSinging => 'الغناء';
+
+  @override
+  String get skillHandcrafts => 'الأشغال اليدوية';
+
+  @override
+  String get skillSports => 'الرياضة';
+
+  @override
+  String get skillCookingDesc => 'طعام لذيذ';
+
+  @override
+  String get skillDrawingDesc => 'عبّر عن فنك';
+
+  @override
+  String get skillColoringDesc => 'استخدم الألوان';
+
+  @override
+  String get skillMusicDesc => 'اعزف الآلات';
+
+  @override
+  String get skillSingingDesc => 'تعلّم الأغاني';
+
+  @override
+  String get skillHandcraftsDesc => 'قص ولصق';
+
+  @override
+  String get skillSportsDesc => 'حافظ على لياقتك';
+
+  @override
+  String get createSomethingFunPrompt => 'خلّينا نعمل حاجة ممتعة!';
+
+  @override
+  String get allLabel => 'الكل';
+
+  @override
+  String get beginnerLabel => 'مبتدئ';
+
+  @override
+  String get intermediateLabel => 'متوسط';
+
+  @override
+  String get advancedLabel => 'متقدم';
+
+  @override
+  String skillBasicsTitle(String skillTitle) => '$skillTitle أساسيات';
+
+  @override
+  String skillFunTitle(String skillTitle) => '$skillTitle ممتع';
+
+  @override
+  String skillAdvancedTitle(String skillTitle) => 'متقدم $skillTitle';
+
+  @override
+  String skillMasteringTitle(String skillTitle) => 'احتراف $skillTitle';
+
+  @override
+  String get searchActivitiesHint => 'ابحث عن الأنشطة...';
+
+  @override
+  String get noActivitiesFound => 'لا توجد أنشطة.';
+
+  @override
+  String get watchNow => 'شاهد الآن';
+
+  @override
+  String get letsCreate => 'هيا نصنع!';
+
+  @override
+  String followStepsToCreate(String videoTitle) =>
+      'اتبع الخطوات في هذا الفيديو لتتعلم كيف تصنع $videoTitle. استمتع وكن مبدعًا!';
+
+  @override
+  String get imDone => 'انتهيت!';
+
+  @override
+  String get animalsLabel => 'الحيوانات';
+
+  @override
+  String get plantsLabel => 'النباتات';
+
+  @override
+  String get learnSomethingNewPrompt => 'هيا نتعلم شيئًا جديدًا!';
+
+  @override
+  String get searchLessonsHint => 'ابحث عن الدروس...';
+
+  @override
+  String get noLessonsFound => 'لا توجد دروس.';
+
+  @override
+  String get lessonIntroBasics => 'مقدمة إلى الأساسيات';
+
+  @override
+  String get lessonAdvancedConcepts => 'مفاهيم متقدمة';
+
+  @override
+  String get lessonIntermediatePractice => 'تدريب متوسط';
+
+  @override
+  String get lessonFunWithMath => 'مرح مع الرياضيات';
+
+  @override
+  String get lessonDeepDive => 'تعمّق أكثر';
+
+  @override
+  String get readyForFunQuiz => 'جاهز لاختبار ممتع؟';
+
+  @override
+  String get playQuickQuizPrompt =>
+      'العب اختبارًا سريعًا لتحصل على نجوم وتُظهر ما تعلمته!';
+
+  @override
+  String get startQuiz => 'ابدأ الاختبار';
+
+  @override
+  String get quizQuestionSkyColor => 'ما لون السماء؟';
+
+  @override
+  String get quizOptionBlue => 'أزرق';
+
+  @override
+  String get quizOptionGreen => 'أخضر';
+
+  @override
+  String get quizOptionRed => 'أحمر';
+
+  @override
+  String get quizOptionYellow => 'أصفر';
+
+  @override
+  String get quizQuestionDogLegs => 'كم عدد أرجل الكلب؟';
+
+  @override
+  String get quizOptionTwo => 'اثنان';
+
+  @override
+  String get quizOptionFour => 'أربعة';
+
+  @override
+  String get quizOptionSix => 'ستة';
+
+  @override
+  String get quizOptionEight => 'ثمانية';
+
+  @override
+  String get quizQuestionFruit => 'أيٌ منها فاكهة؟';
+
+  @override
+  String get quizOptionCarrot => 'جزر';
+
+  @override
+  String get quizOptionApple => 'تفاح';
+
+  @override
+  String get quizOptionPotato => 'بطاطس';
+
+  @override
+  String get quizOptionOnion => 'بصل';
+
+  @override
+  String get quizGreatJob => 'عمل رائع!';
+
+  @override
+  String get quizCompleted => 'لقد أنهيت الاختبار!';
+
+  @override
+  String get quizAwesome => 'رائع!';
+
+  @override
+  String quizTitle(String lessonTitle) => 'اختبار $lessonTitle';
+
+  @override
+  String get quizTime => 'وقت الاختبار!';
+
+  @override
+  String quizQuestionCount(int current, int total) =>
+      'سؤال $current من $total';
+
+  @override
+  String get nextQuestion => 'السؤال التالي';
+
+  @override
+  String get finish => 'إنهاء';
+
+  @override
+  String get searchPagesHint => 'ابحث في الصفحات...';
+
+  @override
+  String get learnExplorePrompt => 'هيا نستكشف ونتعلم شيئًا ممتعًا!';
+
+  @override
+  String get noPagesFound => 'لا توجد صفحات';
+
+  @override
+  String get valuesLabel => 'القيم';
+
+  @override
+  String get methodsLabel => 'الأساليب';
+
+  @override
+  String get valueDetailsLabel => 'تفاصيل القيمة';
+
+  @override
+  String get methodContentLabel => 'محتوى الأسلوب';
+
+  @override
+  String get storiesLabel => 'القصص';
+
+  @override
+  String get gamesLabel => 'الألعاب';
+
+  @override
+  String get videosLabel => 'الفيديوهات';
+
+  @override
+  String get lessonsLabel => 'الدروس';
+
+  @override
+  String get lessonDetailLabel => 'تفاصيل الدرس';
+
+  @override
+  String get skillsLabel => 'المهارات';
+
+  @override
+  String get skillDetailsLabel => 'تفاصيل المهارة';
+
+  @override
+  String get skillVideoLabel => 'فيديو المهارة';
+
+  @override
+  String get behavioralValuesLabel => 'القيم السلوكية';
+
+  @override
+  String get behavioralMethodsLabel => 'الأساليب السلوكية';
+
+  @override
+  String helloName(String name) => 'مرحبًا، $name';
+
+  @override
+  String get levelsTitle => 'المستويات';
+
+  @override
+  String get levelJourneySubtitle => 'تابع رحلة مستوياتك';
+
+  @override
+  String get achievementFirstQuizTitle => 'أول اختبار';
+
+  @override
+  String get achievementFirstQuizDescription => 'أكملت أول اختبار';
+
+  @override
+  String get achievementFiveDayStreakTitle => 'سلسلة 5 أيام';
+
+  @override
+  String get achievementFiveDayStreakDescription => 'أحسنت الاستمرار!';
+
+  @override
+  String get achievementMathMasterTitle => 'عبقري الرياضيات';
+
+  @override
+  String get achievementMathMasterDescription => 'دقة 100%';
+
+  @override
+  String get levelLockedMessage => 'عذرًا! أنهِ المستوى السابق أولًا.';
+
+  @override
+  String levelStartMessage(int level) => 'عمل رائع! ابدأ المستوى $level!';
+
+  @override
+  String get searchSettingsHint => 'ابحث في الإعدادات...';
+
+  @override
+  String get appSettingsSection => 'إعدادات التطبيق';
+
+  @override
+  String get editProfile => 'تعديل الملف الشخصي';
+
+  @override
+  String get changeAvatar => 'تغيير الصورة الرمزية';
+
+  @override
+  String get backgroundMusic => 'موسيقى الخلفية';
+
+  @override
+  String get themes => 'الثيمات';
+
+  @override
+  String get lightAndCalm => 'فاتح وهادئ';
+
+  @override
+  String get aboutUs => 'معلومات عنا';
+
+  @override
+  String get noSettingsFound => 'لم يتم العثور على إعدادات';
+
+  @override
+  String get selectLanguage => 'اختر اللغة';
+
+  @override
+  String languageChanged(String languageName) =>
+      'تم تغيير اللغة إلى $languageName';
+
+  @override
+  String get englishUs => 'الإنجليزية (الولايات المتحدة)';
+
+  @override
+  String get chooseAvatar => 'اختر صورة رمزية';
+
+  @override
+  String get avatarSaved => 'تم حفظ الصورة الرمزية';
+
+  @override
+  String get pleaseSelectThreePictures => 'يرجى اختيار 3 صور';
+
+  @override
+  String get failedToUpdatePicturePassword =>
+      'فشل تحديث كلمة مرور الصور';
+
+  @override
+  String get profileUpdated => 'تم تحديث الملف الشخصي';
+
+  @override
+  String get changeAvatarFromProfile =>
+      'يمكنك تغيير الصورة من شاشة الملف الشخصي';
+
+  @override
+  String get nameLabel => 'الاسم';
+
+  @override
+  String get enterYourName => 'اكتب اسمك';
+
+  @override
+  String get pleaseEnterName => 'يرجى إدخال الاسم';
+
+  @override
+  String get chooseExactlyThreePictures => 'اختر 3 صور بالضبط';
+
+  @override
+  String get darkLight => 'داكن / فاتح';
+
+  @override
+  String get chooseCalmColor => 'اختر لونًا هادئًا';
+
+  @override
+  String get kinderWorldAppTitle => 'تطبيق عالم كيندر';
+
+  @override
+  String versionLabel(String version) => 'الإصدار $version';
+
+  @override
+  String get aboutAppDescription =>
+      'تطبيق كيندر وورلد هو تطبيق مسلٍّ وتعليمي مصمم لمساعدة الأطفال على التعلم من خلال اللعب. نركز على أنشطة سلوكية وتعليمية ومهارية لتوفير تجربة تعلم شاملة.';
+
+  @override
+  String privacyLastUpdated(String date) => 'آخر تحديث: $date';
+
+  @override
+  String get privacyIntroTitle => '1. المقدمة';
+
+  @override
+  String get privacyIntroBody =>
+      'نحن نحترم خصوصيتك وملتزمون بحمايتها من خلال الامتثال لهذه السياسة.';
+
+  @override
+  String get privacyDataCollectionTitle => '2. جمع البيانات';
+
+  @override
+  String get privacyDataCollectionBody =>
+      'نجمع المعلومات لتقديم خدمات أفضل لجميع مستخدمينا. يشمل ذلك بيانات شخصية مثل الاسم والصورة الرمزية، وبيانات الاستخدام لتتبع التقدم.';
+
+  @override
+  String get privacySecurityTitle => '3. الأمان';
+
+  @override
+  String get privacySecurityBody =>
+      'نطبق مجموعة من إجراءات الأمان للحفاظ على سلامة معلوماتك الشخصية.';
 }

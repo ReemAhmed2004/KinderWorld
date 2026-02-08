@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kinder_world/core/constants/app_constants.dart';
+import 'package:kinder_world/core/localization/app_localizations.dart';
 import 'package:kinder_world/core/models/activity.dart';
 import 'package:kinder_world/core/providers/activity_filter_controller.dart';
 import 'package:kinder_world/core/providers/content_controller.dart';
@@ -50,61 +51,62 @@ class _LearnScreenState extends ConsumerState<LearnScreen>
     _controller.dispose();
     super.dispose();
   }
-
-  final List<Map<String, dynamic>> _categories = const [
+  List<Map<String, dynamic>> _categories(AppLocalizations l10n) => [
     {
-      'title': 'Behavioral',
+      'title': l10n.behavioralSkills,
       'image': 'assets/images/behavioral_main.png',
       'color': AppColors.behavioral,
       'route': 'behavioral',
     },
     {
-      'title': 'Educational',
+      'title': l10n.educationalContent,
       'image': 'assets/images/educational_main.png',
       'color': AppColors.educational,
       'route': 'educational',
     },
     {
-      'title': 'Skillful',
+      'title': l10n.skillfulActivities,
       'image': 'assets/images/skillful_main.png',
       'color': AppColors.skillful,
       'route': 'skillful',
     },
     {
-      'title': 'Entertaining',
+      'title': l10n.entertainment,
       'image': 'assets/images/entertaining_main.png',
       'color': AppColors.entertaining,
       'route': 'entertaining',
     },
   ];
 
-  final List<Map<String, String>> _searchItems = const [
-    {'title': 'Behavioral', 'route': 'behavioral'},
-    {'title': 'Educational', 'route': 'educational'},
-    {'title': 'Skillful', 'route': 'skillful'},
-    {'title': 'Entertaining', 'route': 'entertaining'},
-    {'title': 'Values', 'route': 'behavioral'},
-    {'title': 'Methods', 'route': 'behavioral'},
-    {'title': 'Activities', 'route': 'behavioral'},
-    {'title': 'Value Details', 'route': 'behavioral'},
-    {'title': 'Method Content', 'route': 'behavioral'},
-    {'title': 'Stories', 'route': 'entertaining'},
-    {'title': 'Games', 'route': 'entertaining'},
-    {'title': 'Music', 'route': 'entertaining'},
-    {'title': 'Videos', 'route': 'entertaining'},
-    {'title': 'Subjects', 'route': 'educational'},
-    {'title': 'Lessons', 'route': 'educational'},
-    {'title': 'Lesson Detail', 'route': 'educational'},
-    {'title': 'Skills', 'route': 'skillful'},
-    {'title': 'Skill Details', 'route': 'skillful'},
-    {'title': 'Skill Video', 'route': 'skillful'},
-    {'title': 'Behavioral Values', 'route': 'behavioral'},
-    {'title': 'Behavioral Methods', 'route': 'behavioral'},
+  List<Map<String, String>> _searchItems(AppLocalizations l10n) => [
+    {'title': l10n.behavioralSkills, 'route': 'behavioral'},
+    {'title': l10n.educationalContent, 'route': 'educational'},
+    {'title': l10n.skillfulActivities, 'route': 'skillful'},
+    {'title': l10n.entertainment, 'route': 'entertaining'},
+    {'title': l10n.valuesLabel, 'route': 'behavioral'},
+    {'title': l10n.methodsLabel, 'route': 'behavioral'},
+    {'title': l10n.activities, 'route': 'behavioral'},
+    {'title': l10n.valueDetailsLabel, 'route': 'behavioral'},
+    {'title': l10n.methodContentLabel, 'route': 'behavioral'},
+    {'title': l10n.storiesLabel, 'route': 'entertaining'},
+    {'title': l10n.gamesLabel, 'route': 'entertaining'},
+    {'title': l10n.music, 'route': 'entertaining'},
+    {'title': l10n.videosLabel, 'route': 'entertaining'},
+    {'title': l10n.subjects, 'route': 'educational'},
+    {'title': l10n.lessonsLabel, 'route': 'educational'},
+    {'title': l10n.lessonDetailLabel, 'route': 'educational'},
+    {'title': l10n.skillsLabel, 'route': 'skillful'},
+    {'title': l10n.skillDetailsLabel, 'route': 'skillful'},
+    {'title': l10n.skillVideoLabel, 'route': 'skillful'},
+    {'title': l10n.behavioralValuesLabel, 'route': 'behavioral'},
+    {'title': l10n.behavioralMethodsLabel, 'route': 'behavioral'},
   ];
+
 
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
@@ -126,7 +128,7 @@ class _LearnScreenState extends ConsumerState<LearnScreen>
                   onSubmitted: (value) {
                     final query = value.trim().toLowerCase();
                     if (query.isEmpty) return;
-                    final match = _searchItems.firstWhere(
+                    final match = _searchItems(l10n).firstWhere(
                       (c) => (c['title'] as String).toLowerCase() == query,
                       orElse: () => {},
                     );
@@ -135,7 +137,7 @@ class _LearnScreenState extends ConsumerState<LearnScreen>
                     }
                   },
                   decoration: InputDecoration(
-                    hintText: 'Search pages...',
+                    hintText: l10n.searchPagesHint,
                     prefixIcon: const Icon(Icons.search),
                     filled: true,
                     fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
@@ -170,7 +172,7 @@ class _LearnScreenState extends ConsumerState<LearnScreen>
                         const SizedBox(width: 12),
                         Flexible(
                           child: Text(
-                            "Let's explore and learn something fun!",
+                            l10n.learnExplorePrompt,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -196,17 +198,18 @@ class _LearnScreenState extends ConsumerState<LearnScreen>
   }
 
   Widget _buildSearchResults(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final query = _searchQuery.trim().toLowerCase();
     final results = query.isEmpty
-        ? _categories
-        : _searchItems
+        ? _categories(l10n)
+        : _searchItems(l10n)
             .where((c) => (c['title'] as String).toLowerCase().contains(query))
             .toList();
 
     if (results.isEmpty) {
       return Center(
         child: Text(
-          'No pages found',
+          l10n.noPagesFound,
           style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
       );
@@ -431,18 +434,19 @@ class _LearnScreenState extends ConsumerState<LearnScreen>
 class EntertainingScreen extends StatelessWidget {
   const EntertainingScreen({super.key});
 
-  static const List<Map<String, dynamic>> _items = [
-    {'title': 'Puppet Show', 'image': 'assets/images/ent_puppet_show.png', 'color': Colors.orange},
-    {'title': 'Interactive Stories', 'image': 'assets/images/ent_stories.png', 'color': Colors.purple},
-    {'title': 'Songs & Music', 'image': 'assets/images/ent_music.png', 'color': Colors.pink},
-    {'title': 'Funny Clips', 'image': 'assets/images/ent_clips.png', 'color': Colors.yellow},
-    {'title': 'Brain Teasers', 'image': 'assets/images/ent_teasers.png', 'color': Colors.teal},
-    {'title': 'Games', 'image': 'assets/images/ent_games.png', 'color': Colors.blue},
-    {'title': 'Cartoons', 'image': 'assets/images/ent_cartoons.png', 'color': Colors.indigo},
+  List<Map<String, dynamic>> _items(AppLocalizations l10n) => [
+    {'title': l10n.puppetShows, 'image': 'assets/images/ent_puppet_show.png', 'color': Colors.orange},
+    {'title': l10n.interactiveStories, 'image': 'assets/images/ent_stories.png', 'color': Colors.purple},
+    {'title': l10n.songsAndMusic, 'image': 'assets/images/ent_music.png', 'color': Colors.pink},
+    {'title': l10n.funnyClips, 'image': 'assets/images/ent_clips.png', 'color': Colors.yellow},
+    {'title': l10n.brainTeasers, 'image': 'assets/images/ent_teasers.png', 'color': Colors.teal},
+    {'title': l10n.gamesLabel, 'image': 'assets/images/ent_games.png', 'color': Colors.blue},
+    {'title': l10n.cartoonsLabel, 'image': 'assets/images/ent_cartoons.png', 'color': Colors.indigo},
   ];
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Color(0xFFF3E5F5),
       appBar: AppBar(
@@ -471,7 +475,7 @@ class EntertainingScreen extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      'I found something fun for you!',
+                      l10n.foundSomethingFun,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -491,9 +495,9 @@ class EntertainingScreen extends StatelessWidget {
                   mainAxisSpacing: 16,
                   childAspectRatio: 0.9,
                 ),
-                itemCount: _items.length,
+                itemCount: _items(l10n).length,
                 itemBuilder: (context, index) {
-                  final item = _items[index];
+                  final item = _items(l10n)[index];
                   return _buildFunCard(context, item['title'], item['image'], item['color']);
                 },
               ),
@@ -569,41 +573,42 @@ class EntertainmentDetailScreen extends StatelessWidget {
   final String categoryTitle;
   const EntertainmentDetailScreen({super.key, required this.categoryTitle});
 
-  List<Map<String, dynamic>> _getItems() {
+  List<Map<String, dynamic>> _getItems(AppLocalizations l10n) {
     // Mock data based on category
-    switch (categoryTitle) {
-      case 'Games':
-        return [
-          {'title': 'Puzzle Game', 'image': 'assets/images/game_puzzle.png'},
-          {'title': 'Racing Cars', 'image': 'assets/images/game_racing.png'},
-          {'title': 'Memory Match', 'image': 'assets/images/game_memory.png'},
-          {'title': 'Coloring Fun', 'image': 'assets/images/game_coloring.png'},
-        ];
-      case 'Cartoons':
-        return [
-          {'title': 'Adventure Time', 'image': 'assets/images/toon_adv.png'},
-          {'title': 'Funny Animals', 'image': 'assets/images/toon_animals.png'},
-          {'title': 'Space Heroes', 'image': 'assets/images/toon_space.png'},
-          {'title': 'Magic World', 'image': 'assets/images/toon_magic.png'},
-        ];
-      case 'Songs & Music':
-        return [
-          {'title': 'ABC Song', 'image': 'assets/images/song_abc.png'},
-          {'title': 'Baby Shark', 'image': 'assets/images/song_shark.png'},
-          {'title': 'Twinkle Star', 'image': 'assets/images/song_star.png'},
-        ];
-      default:
-        return [
-          {'title': 'Item 1', 'image': 'assets/images/placeholder.png'},
-          {'title': 'Item 2', 'image': 'assets/images/placeholder.png'},
-          {'title': 'Item 3', 'image': 'assets/images/placeholder.png'},
-        ];
+    if (categoryTitle == l10n.gamesLabel) {
+      return [
+        {'title': l10n.puzzleGame, 'image': 'assets/images/game_puzzle.png'},
+        {'title': l10n.racingCars, 'image': 'assets/images/game_racing.png'},
+        {'title': l10n.memoryMatch, 'image': 'assets/images/game_memory.png'},
+        {'title': l10n.coloringFun, 'image': 'assets/images/game_coloring.png'},
+      ];
     }
+    if (categoryTitle == l10n.cartoonsLabel) {
+      return [
+        {'title': l10n.adventureTime, 'image': 'assets/images/toon_adv.png'},
+        {'title': l10n.funnyAnimals, 'image': 'assets/images/toon_animals.png'},
+        {'title': l10n.spaceHeroes, 'image': 'assets/images/toon_space.png'},
+        {'title': l10n.magicWorld, 'image': 'assets/images/toon_magic.png'},
+      ];
+    }
+    if (categoryTitle == l10n.songsAndMusic) {
+      return [
+        {'title': l10n.abcSong, 'image': 'assets/images/song_abc.png'},
+        {'title': l10n.babyShark, 'image': 'assets/images/song_shark.png'},
+        {'title': l10n.twinkleStar, 'image': 'assets/images/song_star.png'},
+      ];
+    }
+    return [
+      {'title': l10n.itemNumber(1), 'image': 'assets/images/placeholder.png'},
+      {'title': l10n.itemNumber(2), 'image': 'assets/images/placeholder.png'},
+      {'title': l10n.itemNumber(3), 'image': 'assets/images/placeholder.png'},
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
-    final items = _getItems();
+    final l10n = AppLocalizations.of(context)!;
+    final items = _getItems(l10n);
 
     return Scaffold(
       backgroundColor: Color(0xFFF3E5F5),
@@ -705,23 +710,24 @@ class EntertainmentDetailScreen extends StatelessWidget {
 class BehavioralScreen extends StatelessWidget {
   const BehavioralScreen({super.key});
 
-  final List<Map<String, dynamic>> _values = const [
-    {'title': 'Giving', 'image': 'assets/images/behavior_giving.png'},
-    {'title': 'Respect', 'image': 'assets/images/behavior_respect.png'},
-    {'title': 'Tolerance', 'image': 'assets/images/behavior_tolerance.png'},
-    {'title': 'Kindness', 'image': 'assets/images/behavior_kindness.png'},
-    {'title': 'Cooperation', 'image': 'assets/images/behavior_cooperation.png'},
-    {'title': 'Responsibility', 'image': 'assets/images/behavior_responsibility.png'},
-    {'title': 'Honesty', 'image': 'assets/images/behavior_honesty.png'},
-    {'title': 'Patience', 'image': 'assets/images/behavior_patience.png'},
-    {'title': 'Courage', 'image': 'assets/images/behavior_courage.png'},
-    {'title': 'Gratitude', 'image': 'assets/images/behavior_gratitude.png'},
-    {'title': 'Peace', 'image': 'assets/images/behavior_peace.png'},
-    {'title': 'Love', 'image': 'assets/images/behavior_love.png'},
+  List<Map<String, dynamic>> _values(AppLocalizations l10n) => [
+    {'title': l10n.valueGiving, 'image': 'assets/images/behavior_giving.png'},
+    {'title': l10n.valueRespect, 'image': 'assets/images/behavior_respect.png'},
+    {'title': l10n.valueTolerance, 'image': 'assets/images/behavior_tolerance.png'},
+    {'title': l10n.valueKindness, 'image': 'assets/images/behavior_kindness.png'},
+    {'title': l10n.valueCooperation, 'image': 'assets/images/behavior_cooperation.png'},
+    {'title': l10n.valueResponsibility, 'image': 'assets/images/behavior_responsibility.png'},
+    {'title': l10n.valueHonesty, 'image': 'assets/images/behavior_honesty.png'},
+    {'title': l10n.valuePatience, 'image': 'assets/images/behavior_patience.png'},
+    {'title': l10n.valueCourage, 'image': 'assets/images/behavior_courage.png'},
+    {'title': l10n.valueGratitude, 'image': 'assets/images/behavior_gratitude.png'},
+    {'title': l10n.valuePeace, 'image': 'assets/images/behavior_peace.png'},
+    {'title': l10n.valueLove, 'image': 'assets/images/behavior_love.png'},
   ];
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Color(0xFFE8F5E9),
       appBar: AppBar(
@@ -739,7 +745,7 @@ class BehavioralScreen extends StatelessWidget {
           children: [
             const ChildHeader(compact: true),
             Text(
-              "Let's practice kindness today!",
+              l10n.practiceKindnessPrompt,
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -756,9 +762,9 @@ class BehavioralScreen extends StatelessWidget {
                   mainAxisSpacing: 16,
                   childAspectRatio: 0.9,
                 ),
-                itemCount: _values.length,
+                itemCount: _values(l10n).length,
                 itemBuilder: (context, index) {
-                  final value = _values[index];
+                  final value = _values(l10n)[index];
                   return _buildValueCard(context, value['title'], value['image']);
                 },
               ),
@@ -834,18 +840,19 @@ class ValueDetailsScreen extends StatelessWidget {
   final String valueTitle;
   const ValueDetailsScreen({super.key, required this.valueTitle});
 
-  final List<Map<String, dynamic>> _methods = const [
-    {'title': 'Relaxation', 'image': 'assets/images/method_relaxation.png'},
-    {'title': 'Imagination', 'image': 'assets/images/method_imagination.png'},
-    {'title': 'Meditation', 'image': 'assets/images/method_meditation.png'},
-    {'title': 'Art Expression', 'image': 'assets/images/method_art.png'},
-    {'title': 'Social Bonding', 'image': 'assets/images/method_social.png'},
-    {'title': 'Self Development', 'image': 'assets/images/method_self_dev.png'},
-    {'title': 'Social Justice Focus', 'image': 'assets/images/method_justice.png'},
+  List<Map<String, dynamic>> _methods(AppLocalizations l10n) => [
+    {'title': l10n.methodRelaxation, 'image': 'assets/images/method_relaxation.png'},
+    {'title': l10n.methodImagination, 'image': 'assets/images/method_imagination.png'},
+    {'title': l10n.methodMeditation, 'image': 'assets/images/method_meditation.png'},
+    {'title': l10n.methodArtExpression, 'image': 'assets/images/method_art.png'},
+    {'title': l10n.methodSocialBonding, 'image': 'assets/images/method_social.png'},
+    {'title': l10n.methodSelfDevelopment, 'image': 'assets/images/method_self_dev.png'},
+    {'title': l10n.methodSocialJusticeFocus, 'image': 'assets/images/method_justice.png'},
   ];
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Color(0xFFE8F5E9),
       appBar: AppBar(
@@ -874,9 +881,9 @@ class ValueDetailsScreen extends StatelessWidget {
                   mainAxisSpacing: 16,
                   childAspectRatio: 0.85,
                 ),
-                itemCount: _methods.length,
+                itemCount: _methods(l10n).length,
                 itemBuilder: (context, index) {
-                  final method = _methods[index];
+                  final method = _methods(l10n)[index];
                   return _buildMethodCard(context, method['title'], method['image']);
                 },
               ),
@@ -952,13 +959,14 @@ class MethodContentScreen extends ConsumerWidget {
 
   const MethodContentScreen({super.key, required this.methodTitle});
 
-  final List<Map<String, dynamic>> _activities = const [
-    {'title': 'Kindness Challenge', 'image': ''},
-    {'title': 'Respect & Sharing', 'image': ''},
+  List<Map<String, dynamic>> _activities(AppLocalizations l10n) => [
+    {'title': l10n.activityKindnessChallenge, 'image': ''},
+    {'title': l10n.activityRespectSharing, 'image': ''},
   ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Color(0xFFE8F5E9),
       body: SafeArea(
@@ -1005,7 +1013,7 @@ class MethodContentScreen extends ConsumerWidget {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Let\'s try a new skill today!',
+                          l10n.tryNewSkillPrompt,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -1031,7 +1039,7 @@ class MethodContentScreen extends ConsumerWidget {
                 Align(
                   alignment: Alignment.center,
                   child: Column(
-                    children: _activities.map((activity) {
+                    children: _activities(l10n).map((activity) {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
                         child: _buildActivityCard(context, activity['title']),
@@ -1104,18 +1112,19 @@ class MethodContentScreen extends ConsumerWidget {
 class SkillfulScreen extends StatelessWidget {
   const SkillfulScreen({super.key});
 
-  final List<Map<String, dynamic>> _skills = const [
-    {'title': 'Cooking', 'image': 'assets/images/skill_cooking.png', 'desc': 'Yummy food'},
-    {'title': 'Drawing', 'image': 'assets/images/skill_drawing.png', 'desc': 'Express art'},
-    {'title': 'Coloring', 'image': 'assets/images/skill_coloring.png', 'desc': 'Use colors'},
-    {'title': 'Music', 'image': 'assets/images/skill_music.png', 'desc': 'Play instruments'},
-    {'title': 'Singing', 'image': 'assets/images/skill_singing.png', 'desc': 'Learn songs'},
-    {'title': 'Handcrafts', 'image': 'assets/images/skill_handcrafts.png', 'desc': 'Cut & Paste'},
-    {'title': 'Sports', 'image': 'assets/images/skill_sports.png', 'desc': 'Stay fit'},
+  List<Map<String, dynamic>> _skills(AppLocalizations l10n) => [
+    {'title': l10n.skillCooking, 'image': 'assets/images/skill_cooking.png', 'desc': l10n.skillCookingDesc},
+    {'title': l10n.skillDrawing, 'image': 'assets/images/skill_drawing.png', 'desc': l10n.skillDrawingDesc},
+    {'title': l10n.skillColoring, 'image': 'assets/images/skill_coloring.png', 'desc': l10n.skillColoringDesc},
+    {'title': l10n.skillMusic, 'image': 'assets/images/skill_music.png', 'desc': l10n.skillMusicDesc},
+    {'title': l10n.skillSinging, 'image': 'assets/images/skill_singing.png', 'desc': l10n.skillSingingDesc},
+    {'title': l10n.skillHandcrafts, 'image': 'assets/images/skill_handcrafts.png', 'desc': l10n.skillHandcraftsDesc},
+    {'title': l10n.skillSports, 'image': 'assets/images/skill_sports.png', 'desc': l10n.skillSportsDesc},
   ];
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Color(0xFFFFF3E0),
       appBar: AppBar(
@@ -1133,7 +1142,7 @@ class SkillfulScreen extends StatelessWidget {
           children: [
             const ChildHeader(compact: true),
             Text(
-              'Let\'s create something fun!',
+              l10n.createSomethingFunPrompt,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -1143,10 +1152,10 @@ class SkillfulScreen extends StatelessWidget {
             const SizedBox(height: 24),
             Expanded(
               child: ListView.separated(
-                itemCount: _skills.length,
+                itemCount: _skills(l10n).length,
                 separatorBuilder: (ctx, index) => const SizedBox(height: 16),
                 itemBuilder: (context, index) {
-                  final skill = _skills[index];
+                  final skill = _skills(l10n)[index];
                   return _buildSkillCard(context, skill);
                 },
               ),
@@ -1250,29 +1259,36 @@ class SkillDetailScreen extends StatefulWidget {
 
 class _SkillDetailScreenState extends State<SkillDetailScreen> {
   String _searchQuery = "";
-  String _selectedLevel = "All";
+  String _selectedLevelKey = 'all';
 
-  final List<String> _levels = ["All", "Beginner", "Intermediate", "Advanced"];
+  List<Map<String, String>> _levels(AppLocalizations l10n) => [
+    {'key': 'all', 'label': l10n.allLabel},
+    {'key': 'beginner', 'label': l10n.beginnerLabel},
+    {'key': 'intermediate', 'label': l10n.intermediateLabel},
+    {'key': 'advanced', 'label': l10n.advancedLabel},
+  ];
 
-  List<Map<String, dynamic>> _getAllVideos() {
+  List<Map<String, dynamic>> _getAllVideos(AppLocalizations l10n) {
     return [
-      {'title': '${widget.skillTitle} Basics', 'level': 'Beginner', 'image': ''},
-      {'title': '${widget.skillTitle} Fun', 'level': 'Beginner', 'image': ''},
-      {'title': 'Advanced ${widget.skillTitle}', 'level': 'Advanced', 'image': ''},
-      {'title': 'Mastering ${widget.skillTitle}', 'level': 'Intermediate', 'image': ''},
+      {'title': l10n.skillBasicsTitle(widget.skillTitle), 'levelKey': 'beginner', 'image': ''},
+      {'title': l10n.skillFunTitle(widget.skillTitle), 'levelKey': 'beginner', 'image': ''},
+      {'title': l10n.skillAdvancedTitle(widget.skillTitle), 'levelKey': 'advanced', 'image': ''},
+      {'title': l10n.skillMasteringTitle(widget.skillTitle), 'levelKey': 'intermediate', 'image': ''},
     ];
   }
 
   List<Map<String, dynamic>> get _filteredVideos {
-    return _getAllVideos().where((video) {
+    final l10n = AppLocalizations.of(context)!;
+    return _getAllVideos(l10n).where((video) {
       final matchesQuery = video['title'].toString().toLowerCase().contains(_searchQuery.toLowerCase());
-      final matchesLevel = _selectedLevel == "All" || video['level'] == _selectedLevel;
+      final matchesLevel = _selectedLevelKey == 'all' || video['levelKey'] == _selectedLevelKey;
       return matchesQuery && matchesLevel;
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Color(0xFFFFF3E0).withOpacity(0.5),
       body: SafeArea(
@@ -1322,7 +1338,7 @@ class _SkillDetailScreenState extends State<SkillDetailScreen> {
                   },
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Search activities...',
+                    hintText: l10n.searchActivitiesHint,
                     hintStyle: TextStyle(color: Colors.grey[500]),
                     prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
                   ),
@@ -1335,16 +1351,16 @@ class _SkillDetailScreenState extends State<SkillDetailScreen> {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                itemCount: _levels.length,
+                itemCount: _levels(l10n).length,
                 itemBuilder: (context, index) {
-                  final level = _levels[index];
-                  final isSelected = _selectedLevel == level;
+                  final level = _levels(l10n)[index];
+                  final isSelected = _selectedLevelKey == level['key'];
                   return Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          _selectedLevel = level;
+                          _selectedLevelKey = level['key']!;
                         });
                       },
                       borderRadius: BorderRadius.circular(20),
@@ -1358,7 +1374,7 @@ class _SkillDetailScreenState extends State<SkillDetailScreen> {
                           ),
                         ),
                         child: Text(
-                          level,
+                          level['label']!,
                           style: TextStyle(
                             color: isSelected ? Colors.white : Colors.grey[700],
                             fontWeight: FontWeight.w600,
@@ -1375,7 +1391,7 @@ class _SkillDetailScreenState extends State<SkillDetailScreen> {
               child: _filteredVideos.isEmpty
                   ? Center(
                       child: Text(
-                        "No activities found.",
+                        l10n.noActivitiesFound,
                         style: TextStyle(color: Colors.grey[500]),
                       ))
                   : ListView.builder(
@@ -1394,6 +1410,7 @@ class _SkillDetailScreenState extends State<SkillDetailScreen> {
   }
 
   Widget _buildVideoCard(Map<String, dynamic> video) {
+    final l10n = AppLocalizations.of(context)!;
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
@@ -1460,7 +1477,7 @@ class _SkillDetailScreenState extends State<SkillDetailScreen> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        'Watch Now',
+                        l10n.watchNow,
                         style: const TextStyle(
                           color: AppColors.skillful,
                           fontSize: 12,
@@ -1496,6 +1513,7 @@ class SkillVideoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Color(0xFFFFF8E1),
       body: SafeArea(
@@ -1605,12 +1623,12 @@ class SkillVideoScreen extends StatelessWidget {
                                     color: Colors.orange[100],
                                     shape: BoxShape.circle,
                                   ),
-                                  child: Icon(Icons.star, color: Colors.orange[700]),
-                                ),
+                                child: Icon(Icons.star, color: Colors.orange[700]),
+                              ),
                                 const SizedBox(width: 10),
-                                const Text(
-                                  "Let's Create!",
-                                  style: TextStyle(
+                                Text(
+                                  l10n.letsCreate,
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black87,
@@ -1620,7 +1638,7 @@ class SkillVideoScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 15),
                             Text(
-                              "Follow the steps in this video to learn how to create $videoTitle. Have fun and be creative!",
+                              l10n.followStepsToCreate(videoTitle),
                               style: TextStyle(
                                 fontSize: 16,
                                 height: 1.5,
@@ -1638,9 +1656,9 @@ class SkillVideoScreen extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(vertical: 18),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                                 ),
-                                child: const Text(
-                                  "I'm Done!",
-                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                child: Text(
+                                  l10n.imDone,
+                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -1664,19 +1682,20 @@ class SkillVideoScreen extends StatelessWidget {
 class EducationalScreen extends StatelessWidget {
   const EducationalScreen({super.key});
 
-  final List<Map<String, dynamic>> _subjects = const [
-    {'title': 'English', 'image': 'assets/images/edu_english.png', 'color': Colors.blueAccent},
-    {'title': 'Arabic', 'image': 'assets/images/edu_arabic.png', 'color': Colors.green},
-    {'title': 'Geography', 'image': 'assets/images/edu_geography.png', 'color': Colors.orange},
-    {'title': 'History', 'image': 'assets/images/edu_history.png', 'color': Colors.brown},
-    {'title': 'Science', 'image': 'assets/images/edu_science.png', 'color': Colors.purple},
-    {'title': 'Math', 'image': 'assets/images/edu_math.png', 'color': Colors.red},
-    {'title': 'Animals', 'image': 'assets/images/edu_animals.png', 'color': Colors.teal},
-    {'title': 'Plants', 'image': 'assets/images/edu_plants.png', 'color': Colors.lightGreen},
+  List<Map<String, dynamic>> _subjects(AppLocalizations l10n) => [
+    {'title': l10n.english, 'image': 'assets/images/edu_english.png', 'color': Colors.blueAccent},
+    {'title': l10n.arabic, 'image': 'assets/images/edu_arabic.png', 'color': Colors.green},
+    {'title': l10n.geography, 'image': 'assets/images/edu_geography.png', 'color': Colors.orange},
+    {'title': l10n.history, 'image': 'assets/images/edu_history.png', 'color': Colors.brown},
+    {'title': l10n.science, 'image': 'assets/images/edu_science.png', 'color': Colors.purple},
+    {'title': l10n.mathematics, 'image': 'assets/images/edu_math.png', 'color': Colors.red},
+    {'title': l10n.animalsLabel, 'image': 'assets/images/edu_animals.png', 'color': Colors.teal},
+    {'title': l10n.plantsLabel, 'image': 'assets/images/edu_plants.png', 'color': Colors.lightGreen},
   ];
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Color(0xFFE3F2FD),
       appBar: AppBar(
@@ -1704,7 +1723,7 @@ class EducationalScreen extends StatelessWidget {
                   Icon(Icons.lightbulb, color: AppColors.educational, size: 32),
                   const SizedBox(width: 16),
                   Text(
-                    "Let's learn something new!",
+                    l10n.learnSomethingNewPrompt,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -1723,9 +1742,9 @@ class EducationalScreen extends StatelessWidget {
                   mainAxisSpacing: 20,
                   childAspectRatio: 1.0,
                 ),
-                itemCount: _subjects.length,
+                itemCount: _subjects(l10n).length,
                 itemBuilder: (context, index) {
-                  final subject = _subjects[index];
+                  final subject = _subjects(l10n)[index];
                   return _buildSubjectCard(context, subject);
                 },
               ),
@@ -1805,28 +1824,35 @@ class EducationalSubjectScreen extends StatefulWidget {
 
 class _EducationalSubjectScreenState extends State<EducationalSubjectScreen> {
   String _searchQuery = "";
-  String _selectedLevel = "All";
+  String _selectedLevelKey = 'all';
 
-  final List<String> _levels = ["All", "Beginner", "Intermediate", "Advanced"];
+  List<Map<String, String>> _levels(AppLocalizations l10n) => [
+    {'key': 'all', 'label': l10n.allLabel},
+    {'key': 'beginner', 'label': l10n.beginnerLabel},
+    {'key': 'intermediate', 'label': l10n.intermediateLabel},
+    {'key': 'advanced', 'label': l10n.advancedLabel},
+  ];
 
-  final List<Map<String, dynamic>> _allLessons = const [
-    {'title': 'Introduction to Basics', 'level': 'Beginner', 'image': ''},
-    {'title': 'Advanced Concepts', 'level': 'Advanced', 'image': ''},
-    {'title': 'Intermediate Practice', 'level': 'Intermediate', 'image': ''},
-    {'title': 'Fun with Math', 'level': 'Beginner', 'image': ''},
-    {'title': 'Deep Dive', 'level': 'Advanced', 'image': ''},
+  List<Map<String, dynamic>> _allLessons(AppLocalizations l10n) => [
+    {'title': l10n.lessonIntroBasics, 'levelKey': 'beginner', 'image': ''},
+    {'title': l10n.lessonAdvancedConcepts, 'levelKey': 'advanced', 'image': ''},
+    {'title': l10n.lessonIntermediatePractice, 'levelKey': 'intermediate', 'image': ''},
+    {'title': l10n.lessonFunWithMath, 'levelKey': 'beginner', 'image': ''},
+    {'title': l10n.lessonDeepDive, 'levelKey': 'advanced', 'image': ''},
   ];
 
   List<Map<String, dynamic>> get _filteredLessons {
-    return _allLessons.where((lesson) {
+    final l10n = AppLocalizations.of(context)!;
+    return _allLessons(l10n).where((lesson) {
       final matchesQuery = lesson['title'].toString().toLowerCase().contains(_searchQuery.toLowerCase());
-      final matchesLevel = _selectedLevel == "All" || lesson['level'] == _selectedLevel;
+      final matchesLevel = _selectedLevelKey == 'all' || lesson['levelKey'] == _selectedLevelKey;
       return matchesQuery && matchesLevel;
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Color(0xFFE3F2FD),
       body: SafeArea(
@@ -1876,7 +1902,7 @@ class _EducationalSubjectScreenState extends State<EducationalSubjectScreen> {
                   },
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Search lessons...',
+                    hintText: l10n.searchLessonsHint,
                     hintStyle: TextStyle(color: Colors.grey[500]),
                     prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
                   ),
@@ -1889,16 +1915,16 @@ class _EducationalSubjectScreenState extends State<EducationalSubjectScreen> {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                itemCount: _levels.length,
+                itemCount: _levels(l10n).length,
                 itemBuilder: (context, index) {
-                  final level = _levels[index];
-                  final isSelected = _selectedLevel == level;
+                  final level = _levels(l10n)[index];
+                  final isSelected = _selectedLevelKey == level['key'];
                   return Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          _selectedLevel = level;
+                          _selectedLevelKey = level['key']!;
                         });
                       },
                       borderRadius: BorderRadius.circular(20),
@@ -1912,7 +1938,7 @@ class _EducationalSubjectScreenState extends State<EducationalSubjectScreen> {
                           ),
                         ),
                         child: Text(
-                          level,
+                          level['label']!,
                           style: TextStyle(
                             color: isSelected ? Colors.white : Colors.grey[700],
                             fontWeight: FontWeight.w600,
@@ -1929,7 +1955,7 @@ class _EducationalSubjectScreenState extends State<EducationalSubjectScreen> {
               child: _filteredLessons.isEmpty
                   ? Center(
                       child: Text(
-                        "No lessons found.",
+                        l10n.noLessonsFound,
                         style: TextStyle(color: Colors.grey[500]),
                       ))
                   : ListView.builder(
@@ -2053,6 +2079,7 @@ class LessonDetailScreen extends StatefulWidget {
 class _LessonDetailScreenState extends State<LessonDetailScreen> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Color(0xFFE1F5FE),
       body: SafeArea(
@@ -2158,27 +2185,27 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
                                     color: AppColors.educational.withOpacity(0.15),
                                     shape: BoxShape.circle,
                                   ),
-                                  child: const Icon(Icons.quiz, color: AppColors.educational),
-                                ),
-                                const SizedBox(width: 10),
-                                const Text(
-                                  "Ready for a fun quiz?",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ],
+                              child: const Icon(Icons.quiz, color: AppColors.educational),
                             ),
-                            const SizedBox(height: 14),
+                            const SizedBox(width: 10),
                             Text(
-                              "Play a quick quiz to earn stars and show what you learned!",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.grey[600],
+                              l10n.readyForFunQuiz,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
                               ),
                             ),
+                          ],
+                        ),
+                        const SizedBox(height: 14),
+                        Text(
+                          l10n.playQuickQuizPrompt,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                          ),
+                        ),
                             const SizedBox(height: 18),
                             SizedBox(
                               width: double.infinity,
@@ -2193,9 +2220,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
                                   );
                                 },
                                 icon: const Icon(Icons.play_circle_fill),
-                                label: const Text(
-                                  "Start Quiz",
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                label: Text(
+                                  l10n.startQuiz,
+                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                 ),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.educational,
@@ -2235,20 +2262,20 @@ class _LessonQuizScreenState extends State<LessonQuizScreen> {
   int? _selectedAnswerIndex;
   bool _showResult = false;
 
-  final List<Map<String, dynamic>> _quizData = const [
+  List<Map<String, dynamic>> _quizData(AppLocalizations l10n) => [
     {
-      'question': 'What color is the sky?',
-      'options': ['Blue', 'Green', 'Red', 'Yellow'],
+      'question': l10n.quizQuestionSkyColor,
+      'options': [l10n.quizOptionBlue, l10n.quizOptionGreen, l10n.quizOptionRed, l10n.quizOptionYellow],
       'correct': 0,
     },
     {
-      'question': 'How many legs does a dog have?',
-      'options': ['Two', 'Four', 'Six', 'Eight'],
+      'question': l10n.quizQuestionDogLegs,
+      'options': [l10n.quizOptionTwo, l10n.quizOptionFour, l10n.quizOptionSix, l10n.quizOptionEight],
       'correct': 1,
     },
     {
-      'question': 'Which one is a fruit?',
-      'options': ['Carrot', 'Apple', 'Potato', 'Onion'],
+      'question': l10n.quizQuestionFruit,
+      'options': [l10n.quizOptionCarrot, l10n.quizOptionApple, l10n.quizOptionPotato, l10n.quizOptionOnion],
       'correct': 1,
     },
   ];
@@ -2261,7 +2288,8 @@ class _LessonQuizScreenState extends State<LessonQuizScreen> {
   }
 
   void _nextQuestion() {
-    if (_currentQuestionIndex < _quizData.length - 1) {
+    final l10n = AppLocalizations.of(context)!;
+    if (_currentQuestionIndex < _quizData(l10n).length - 1) {
       setState(() {
         _currentQuestionIndex++;
         _selectedAnswerIndex = null;
@@ -2272,20 +2300,20 @@ class _LessonQuizScreenState extends State<LessonQuizScreen> {
         context: context,
         builder: (ctx) => AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: const Row(
+          title: Row(
             children: [
               Icon(Icons.celebration, color: Colors.orange, size: 28),
               SizedBox(width: 10),
-              Text('Great Job!'),
+              Text(l10n.quizGreatJob),
             ],
           ),
-          content: const Text('You completed the quiz!'),
+          content: Text(l10n.quizCompleted),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text(
-                'Awesome!',
-                style: TextStyle(
+              child: Text(
+                l10n.quizAwesome,
+                style: const TextStyle(
                   color: Colors.orange,
                   fontWeight: FontWeight.bold,
                 ),
@@ -2299,7 +2327,8 @@ class _LessonQuizScreenState extends State<LessonQuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final currentQ = _quizData[_currentQuestionIndex];
+    final l10n = AppLocalizations.of(context)!;
+    final currentQ = _quizData(l10n)[_currentQuestionIndex];
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFF3E0),
@@ -2307,7 +2336,7 @@ class _LessonQuizScreenState extends State<LessonQuizScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          '${widget.lessonTitle} Quiz',
+          l10n.quizTitle(widget.lessonTitle),
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             color: AppColors.educational,
@@ -2352,16 +2381,16 @@ class _LessonQuizScreenState extends State<LessonQuizScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Quiz Time!',
-                            style: TextStyle(
+                          Text(
+                            l10n.quizTime,
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                             ),
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Question ${_currentQuestionIndex + 1} of ${_quizData.length}',
+                            l10n.quizQuestionCount(_currentQuestionIndex + 1, _quizData(l10n).length),
                             style: TextStyle(color: Colors.grey[600]),
                           ),
                         ],
@@ -2374,7 +2403,7 @@ class _LessonQuizScreenState extends State<LessonQuizScreen> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: LinearProgressIndicator(
-                  value: (_currentQuestionIndex + 1) / _quizData.length,
+                  value: (_currentQuestionIndex + 1) / _quizData(l10n).length,
                   backgroundColor: Colors.orange[100],
                   valueColor: const AlwaysStoppedAnimation<Color>(AppColors.educational),
                   minHeight: 8,
@@ -2466,7 +2495,7 @@ class _LessonQuizScreenState extends State<LessonQuizScreen> {
                     ),
                   ),
                   child: Text(
-                    _currentQuestionIndex < _quizData.length - 1 ? 'Next Question' : 'Finish',
+                    _currentQuestionIndex < _quizData(l10n).length - 1 ? l10n.nextQuestion : l10n.finish,
                     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),

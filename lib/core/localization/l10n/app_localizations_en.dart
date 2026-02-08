@@ -246,6 +246,369 @@ class AppLocalizationsEn extends AppLocalizations {
   
   @override
   String get start => 'Start';
+
+  @override
+  String get searchPagesHint => 'Search pages...';
+
+  @override
+  String get learnExplorePrompt => 'Let\'s explore and learn something fun!';
+
+  @override
+  String get noPagesFound => 'No pages found';
+
+  @override
+  String get valuesLabel => 'Values';
+
+  @override
+  String get methodsLabel => 'Methods';
+
+  @override
+  String get valueDetailsLabel => 'Value Details';
+
+  @override
+  String get methodContentLabel => 'Method Content';
+
+  @override
+  String get storiesLabel => 'Stories';
+
+  @override
+  String get gamesLabel => 'Games';
+
+  @override
+  String get videosLabel => 'Videos';
+
+  @override
+  String get lessonsLabel => 'Lessons';
+
+  @override
+  String get lessonDetailLabel => 'Lesson Detail';
+
+  @override
+  String get skillsLabel => 'Skills';
+
+  @override
+  String get skillDetailsLabel => 'Skill Details';
+
+  @override
+  String get skillVideoLabel => 'Skill Video';
+
+  @override
+  String get behavioralValuesLabel => 'Behavioral Values';
+
+  @override
+  String get behavioralMethodsLabel => 'Behavioral Methods';
+
+  @override
+  String get songsAndMusic => 'Songs & Music';
+
+  @override
+  String get cartoonsLabel => 'Cartoons';
+
+  @override
+  String get foundSomethingFun => 'I found something fun for you!';
+
+  @override
+  String get puzzleGame => 'Puzzle Game';
+
+  @override
+  String get racingCars => 'Racing Cars';
+
+  @override
+  String get memoryMatch => 'Memory Match';
+
+  @override
+  String get coloringFun => 'Coloring Fun';
+
+  @override
+  String get adventureTime => 'Adventure Time';
+
+  @override
+  String get funnyAnimals => 'Funny Animals';
+
+  @override
+  String get spaceHeroes => 'Space Heroes';
+
+  @override
+  String get magicWorld => 'Magic World';
+
+  @override
+  String get abcSong => 'ABC Song';
+
+  @override
+  String get babyShark => 'Baby Shark';
+
+  @override
+  String get twinkleStar => 'Twinkle Star';
+
+  @override
+  String itemNumber(int number) => 'Item $number';
+
+  @override
+  String get valueGiving => 'Giving';
+
+  @override
+  String get valueRespect => 'Respect';
+
+  @override
+  String get valueTolerance => 'Tolerance';
+
+  @override
+  String get valueKindness => 'Kindness';
+
+  @override
+  String get valueCooperation => 'Cooperation';
+
+  @override
+  String get valueResponsibility => 'Responsibility';
+
+  @override
+  String get valueHonesty => 'Honesty';
+
+  @override
+  String get valuePatience => 'Patience';
+
+  @override
+  String get valueCourage => 'Courage';
+
+  @override
+  String get valueGratitude => 'Gratitude';
+
+  @override
+  String get valuePeace => 'Peace';
+
+  @override
+  String get valueLove => 'Love';
+
+  @override
+  String get practiceKindnessPrompt => 'Let\'s practice kindness today!';
+
+  @override
+  String get methodRelaxation => 'Relaxation';
+
+  @override
+  String get methodImagination => 'Imagination';
+
+  @override
+  String get methodMeditation => 'Meditation';
+
+  @override
+  String get methodArtExpression => 'Art Expression';
+
+  @override
+  String get methodSocialBonding => 'Social Bonding';
+
+  @override
+  String get methodSelfDevelopment => 'Self Development';
+
+  @override
+  String get methodSocialJusticeFocus => 'Social Justice Focus';
+
+  @override
+  String get activityKindnessChallenge => 'Kindness Challenge';
+
+  @override
+  String get activityRespectSharing => 'Respect & Sharing';
+
+  @override
+  String get tryNewSkillPrompt => 'Let\'s try a new skill today!';
+
+  @override
+  String get skillCooking => 'Cooking';
+
+  @override
+  String get skillDrawing => 'Drawing';
+
+  @override
+  String get skillColoring => 'Coloring';
+
+  @override
+  String get skillMusic => 'Music';
+
+  @override
+  String get skillSinging => 'Singing';
+
+  @override
+  String get skillHandcrafts => 'Handcrafts';
+
+  @override
+  String get skillSports => 'Sports';
+
+  @override
+  String get skillCookingDesc => 'Yummy food';
+
+  @override
+  String get skillDrawingDesc => 'Express art';
+
+  @override
+  String get skillColoringDesc => 'Use colors';
+
+  @override
+  String get skillMusicDesc => 'Play instruments';
+
+  @override
+  String get skillSingingDesc => 'Learn songs';
+
+  @override
+  String get skillHandcraftsDesc => 'Cut & Paste';
+
+  @override
+  String get skillSportsDesc => 'Stay fit';
+
+  @override
+  String get createSomethingFunPrompt => 'Let\'s create something fun!';
+
+  @override
+  String get allLabel => 'All';
+
+  @override
+  String get beginnerLabel => 'Beginner';
+
+  @override
+  String get intermediateLabel => 'Intermediate';
+
+  @override
+  String get advancedLabel => 'Advanced';
+
+  @override
+  String skillBasicsTitle(String skillTitle) => '$skillTitle Basics';
+
+  @override
+  String skillFunTitle(String skillTitle) => '$skillTitle Fun';
+
+  @override
+  String skillAdvancedTitle(String skillTitle) => 'Advanced $skillTitle';
+
+  @override
+  String skillMasteringTitle(String skillTitle) => 'Mastering $skillTitle';
+
+  @override
+  String get searchActivitiesHint => 'Search activities...';
+
+  @override
+  String get noActivitiesFound => 'No activities found.';
+
+  @override
+  String get watchNow => 'Watch Now';
+
+  @override
+  String get letsCreate => 'Let\'s Create!';
+
+  @override
+  String followStepsToCreate(String videoTitle) =>
+      'Follow the steps in this video to learn how to create $videoTitle. Have fun and be creative!';
+
+  @override
+  String get imDone => 'I\'m Done!';
+
+  @override
+  String get animalsLabel => 'Animals';
+
+  @override
+  String get plantsLabel => 'Plants';
+
+  @override
+  String get learnSomethingNewPrompt => 'Let\'s learn something new!';
+
+  @override
+  String get searchLessonsHint => 'Search lessons...';
+
+  @override
+  String get noLessonsFound => 'No lessons found.';
+
+  @override
+  String get lessonIntroBasics => 'Introduction to Basics';
+
+  @override
+  String get lessonAdvancedConcepts => 'Advanced Concepts';
+
+  @override
+  String get lessonIntermediatePractice => 'Intermediate Practice';
+
+  @override
+  String get lessonFunWithMath => 'Fun with Math';
+
+  @override
+  String get lessonDeepDive => 'Deep Dive';
+
+  @override
+  String get readyForFunQuiz => 'Ready for a fun quiz?';
+
+  @override
+  String get playQuickQuizPrompt =>
+      'Play a quick quiz to earn stars and show what you learned!';
+
+  @override
+  String get startQuiz => 'Start Quiz';
+
+  @override
+  String get quizQuestionSkyColor => 'What color is the sky?';
+
+  @override
+  String get quizOptionBlue => 'Blue';
+
+  @override
+  String get quizOptionGreen => 'Green';
+
+  @override
+  String get quizOptionRed => 'Red';
+
+  @override
+  String get quizOptionYellow => 'Yellow';
+
+  @override
+  String get quizQuestionDogLegs => 'How many legs does a dog have?';
+
+  @override
+  String get quizOptionTwo => 'Two';
+
+  @override
+  String get quizOptionFour => 'Four';
+
+  @override
+  String get quizOptionSix => 'Six';
+
+  @override
+  String get quizOptionEight => 'Eight';
+
+  @override
+  String get quizQuestionFruit => 'Which one is a fruit?';
+
+  @override
+  String get quizOptionCarrot => 'Carrot';
+
+  @override
+  String get quizOptionApple => 'Apple';
+
+  @override
+  String get quizOptionPotato => 'Potato';
+
+  @override
+  String get quizOptionOnion => 'Onion';
+
+  @override
+  String get quizGreatJob => 'Great Job!';
+
+  @override
+  String get quizCompleted => 'You completed the quiz!';
+
+  @override
+  String get quizAwesome => 'Awesome!';
+
+  @override
+  String quizTitle(String lessonTitle) => '$lessonTitle Quiz';
+
+  @override
+  String get quizTime => 'Quiz Time!';
+
+  @override
+  String quizQuestionCount(int current, int total) =>
+      'Question $current of $total';
+
+  @override
+  String get nextQuestion => 'Next Question';
+
+  @override
+  String get finish => 'Finish';
   
   @override
   String get entertainment => 'Entertainment';
@@ -1004,6 +1367,148 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String xpToLevel(int level) => 'XP to Level $level';
+
+  @override
+  String helloName(String name) => 'Hello, $name';
+
+  @override
+  String get levelsTitle => 'Levels';
+
+  @override
+  String get levelJourneySubtitle => 'Track your level journey';
+
+  @override
+  String get achievementFirstQuizTitle => 'First Quiz';
+
+  @override
+  String get achievementFirstQuizDescription => 'Completed first quiz';
+
+  @override
+  String get achievementFiveDayStreakTitle => '5 Day Streak';
+
+  @override
+  String get achievementFiveDayStreakDescription => 'Keep it up!';
+
+  @override
+  String get achievementMathMasterTitle => 'Math Master';
+
+  @override
+  String get achievementMathMasterDescription => '100% accuracy';
+
+  @override
+  String get levelLockedMessage => 'Oops! Finish the previous level first.';
+
+  @override
+  String levelStartMessage(int level) => 'Great job! Start Level $level!';
+
+  @override
+  String get searchSettingsHint => 'Search settings...';
+
+  @override
+  String get appSettingsSection => 'App Settings';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get changeAvatar => 'Change Avatar';
+
+  @override
+  String get backgroundMusic => 'Background Music';
+
+  @override
+  String get themes => 'Themes';
+
+  @override
+  String get lightAndCalm => 'Light & Calm';
+
+  @override
+  String get aboutUs => 'About Us';
+
+  @override
+  String get noSettingsFound => 'No settings found';
+
+  @override
+  String get selectLanguage => 'Select Language';
+
+  @override
+  String languageChanged(String languageName) =>
+      'Language changed to $languageName';
+
+  @override
+  String get englishUs => 'English (US)';
+
+  @override
+  String get chooseAvatar => 'Choose Avatar';
+
+  @override
+  String get avatarSaved => 'Avatar Saved';
+
+  @override
+  String get pleaseSelectThreePictures => 'Please select 3 pictures';
+
+  @override
+  String get failedToUpdatePicturePassword =>
+      'Failed to update picture password';
+
+  @override
+  String get profileUpdated => 'Profile Updated';
+
+  @override
+  String get changeAvatarFromProfile =>
+      'Change your avatar from Profile screen';
+
+  @override
+  String get nameLabel => 'Name';
+
+  @override
+  String get enterYourName => 'Enter your name';
+
+  @override
+  String get pleaseEnterName => 'Please enter a name';
+
+  @override
+  String get chooseExactlyThreePictures => 'Choose exactly 3 pictures';
+
+  @override
+  String get darkLight => 'Dark / Light';
+
+  @override
+  String get chooseCalmColor => 'Choose a calm color';
+
+  @override
+  String get kinderWorldAppTitle => 'Kinder World App';
+
+  @override
+  String versionLabel(String version) => 'Version $version';
+
+  @override
+  String get aboutAppDescription =>
+      'Kinder World is a fun and educational application designed to help children learn through play. We focus on behavioral, educational, and skillful activities to provide a holistic learning experience.';
+
+  @override
+  String privacyLastUpdated(String date) => 'Last Updated: $date';
+
+  @override
+  String get privacyIntroTitle => '1. Introduction';
+
+  @override
+  String get privacyIntroBody =>
+      'We respect your privacy and are committed to protecting it through our compliance with this policy.';
+
+  @override
+  String get privacyDataCollectionTitle => '2. Data Collection';
+
+  @override
+  String get privacyDataCollectionBody =>
+      'We collect information to provide better services to all our users. This includes personal details like name and avatar, and usage data to track progress.';
+
+  @override
+  String get privacySecurityTitle => '3. Security';
+
+  @override
+  String get privacySecurityBody =>
+      'We implement a variety of security measures to maintain the safety of your personal information.';
   
   @override
   String get choosePlan => 'Choose Your Plan';
